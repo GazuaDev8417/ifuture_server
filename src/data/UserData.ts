@@ -17,6 +17,7 @@ export default class UserData extends ConnectToDatabase{
         }
     }
 
+
     getAllUsers = async():Promise<UserModel[]>=>{
         try{
 
@@ -40,6 +41,7 @@ export default class UserData extends ConnectToDatabase{
         }
     }
 
+    
     findByEmail = async(email:string):Promise<UserModel>=>{
         try{
 
@@ -50,8 +52,33 @@ export default class UserData extends ConnectToDatabase{
             throw new Error(`Erro ao buscar usuário: ${e}`)
         }
     }
+    
+    
+    registAddress = async(
+        street:string,
+        cep:string,
+        number:string,
+        neighbourhood:string,
+        city:string,
+        state:string,
+        complement:string,
+        id:string
+    ):Promise<void>=>{
+        try{
 
-//RESTAURANTS FIELD
-    
-    
+            await ConnectToDatabase.con(this.USER_TABLE).update({
+                street,
+                cep,
+                number,
+                neighbourhood,
+                city,
+                state,
+                complement
+            }).where({ id })
+            
+        }catch(e:any){
+            throw new Error(`Erro ao atualizar usuário: ${e}`)
+        }
+    }
+
 }

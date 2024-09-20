@@ -22,6 +22,20 @@ export default class UserController{
     }
 
 
+    getProfile = async(req:Request, res:Response):Promise<void>=>{
+        try{
+
+            const user = await this.userBusiness.getProfile(req)
+
+            res.status(201).send(user)
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
     login = async(req:Request, res:Response):Promise<void>=>{
         try{
 
@@ -34,7 +48,18 @@ export default class UserController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     }
+    
 
-//RESTAURANT FIELD
-  
+    registAddress = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            await this.userBusiness.registAddress(req)
+
+            res.status(200).send('Endereço registrado com sucesso!')
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
 }

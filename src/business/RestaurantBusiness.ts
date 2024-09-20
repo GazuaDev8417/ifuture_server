@@ -14,10 +14,17 @@ export default class RestaurantBusiness{
     signupRestaurant = async(req:Request):Promise<void>=>{
         const { address , category, deliveryTime, description, logoUrl, name, shipping }= req.body
         const id = new Services().idGenerator()
-
         const restaurant = new Restaurant(
             address , category, deliveryTime, description, id, logoUrl, name, shipping
         )
+
+        const registeredRestaurant = await this.restaurantData.restaurantByImage(logoUrl)
+        if(registeredRestaurant){
+            throw{
+                statusCode: 403,
+                error: new Error('Restaurante já registrado')
+            }
+        }
 
         await this.restaurantData.signupRestaurant(restaurant)
     }

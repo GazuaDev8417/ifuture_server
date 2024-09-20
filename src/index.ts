@@ -18,6 +18,10 @@ const userController = new UserController(
 
 app.post('/signup', userController.signup)
 app.post('/login', userController.login)
+
+app.get('/profile', userController.getProfile)
+
+app.patch('/address/:id', userController.registAddress)
 //RESTAURANT FIELD
 app.post('/signup_restaurant', restaurantController.singupRestaurant)
 app.post('/products', restaurantController.insertProduct)

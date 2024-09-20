@@ -3,7 +3,7 @@ import UserData from "../data/UserData"
 import Services from "../services/Authentication"
 import User from "../model/User"
 import { UserModel } from "../model/typesAndInterfaces"
-import Restaurant from "../model/Restaurant"
+
 
 
 export default class UserBusiness{
@@ -77,6 +77,13 @@ export default class UserBusiness{
     }
 
 
+    getProfile = async(req:Request):Promise<UserModel>=>{
+        const user = await new Services().authToken(req)
+
+        return user
+    }
+
+
     login = async(req:Request):Promise<object>=>{
         const { email, password } = req.body
 
@@ -107,6 +114,16 @@ export default class UserBusiness{
         const token = new Services().token(registeredUser.id)
 
         return { token, registeredUser }
+    }
+
+
+    registAddress = async(req:Request):Promise<void>=>{
+        const user = await new Services().authToken(req)
+        const { street, cep, number, neighbourhood, city, state, complement } = req.body
+        
+        await this.userData.registAddress(
+            street, cep, number, neighbourhood, city, state, complement, user.id
+        )
     }
 
 }

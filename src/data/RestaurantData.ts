@@ -42,6 +42,18 @@ export default class RestaurantData extends ConnectToDatabase{
         }
     }
 
+
+    restaurantByImage = async(logoUrl:string):Promise<Restaurant>=>{
+        try{
+
+            const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE).where({ logoUrl })
+
+            return restaurant
+        }catch(e:any){
+            throw new Error(`Erro buscar restaurante: ${e}`)
+        }
+    }
+
 //PRODUCTS
     insertProduct = async(product:Product):Promise<void>=>{
         try{

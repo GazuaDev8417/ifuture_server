@@ -3,7 +3,7 @@ import { v4 } from 'uuid'
 import * as jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import UserData from '../data/UserData'
-import User from '../model/User'
+import { UserModel } from '../model/typesAndInterfaces'
 
 
 
@@ -48,7 +48,7 @@ export default class Services{
         return bcrypt.compareSync(txt, hash)
     }
 
-    authToken = async(req:Request):Promise<User>=>{
+    authToken = async(req:Request):Promise<UserModel>=>{
         const token = req.headers.authorization
         const tokenData = new Services().tokenData(token as string)
         const user = new UserData().findById(tokenData.payload)

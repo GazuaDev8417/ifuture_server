@@ -84,7 +84,7 @@ export default class UserBusiness{
     }
 
 
-    login = async(req:Request):Promise<object>=>{
+    login = async(req:Request):Promise<string>=>{
         const { email, password } = req.body
 
         if(!password || !email){
@@ -113,7 +113,7 @@ export default class UserBusiness{
 
         const token = new Services().token(registeredUser.id)
 
-        return { token, registeredUser }
+        return token
     }
 
 

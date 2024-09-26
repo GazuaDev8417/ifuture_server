@@ -1,4 +1,7 @@
 import { app } from "./app"
+import OrderBusiness from "./business/OrderBusiness"
+import OrderController from "./controller/OrderController"
+import OrderData from "./data/OrderData"
 import RestaurantController from "./controller/RestaurantController"
 import RestaurantBusiness from "./business/RestaurantBusiness"
 import RestaurantData from "./data/RestaurantData"
@@ -15,6 +18,10 @@ const userController = new UserController(
     new UserBusiness(new UserData)
 )
 
+const orderController = new OrderController(
+    new OrderBusiness(new OrderData)
+)
+
 
 app.post('/signup', userController.signup)
 app.post('/login', userController.login)
@@ -29,3 +36,9 @@ app.post('/products', restaurantController.insertProduct)
 app.get('/restaurants', restaurantController.getRestaurants)
 app.get('/restaurants/:id', restaurantController.restaurantById)
 app.get('/restaurant_products/:id', restaurantController.productsByRestaurant)
+//ORDERS
+app.post('/order', orderController.todo_orders)
+
+app.get('/orders/:id', orderController.ordersByClientAndRestaurant)
+
+app.delete('/order/:id', orderController.deleteOrder)

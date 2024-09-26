@@ -1,7 +1,8 @@
 import ConnectToDatabase from "./Connexion"
 import Restaurant from "../model/Restaurant"
 import Product from "../model/Products"
-import { ProductModel } from "../model/typesAndInterfaces"
+import { OrderModel, ProductModel } from "../model/typesAndInterfaces"
+import Orders from "../model/Order"
 
 
 export default class RestaurantData extends ConnectToDatabase{

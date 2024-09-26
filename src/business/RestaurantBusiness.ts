@@ -6,6 +6,7 @@ import Services from "../services/Authentication"
 import { ProductModel } from "../model/typesAndInterfaces"
 
 
+
 export default class RestaurantBusiness{
     constructor(
         private restaurantData:RestaurantData
@@ -87,3 +88,5 @@ export default class RestaurantBusiness{
         return products
     }
 }
+
+

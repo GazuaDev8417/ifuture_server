@@ -15,3 +15,14 @@ export interface ProductModel{
     price:number
     provider:string
 }
+
+export interface OrderModel{
+    id:string
+    product:string 
+    price:number
+    quantity:number
+    total:number
+    moment:string
+    restaurant:string 
+    client:string
+}

@@ -62,4 +62,5 @@ export default class UserController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     }
+
 }

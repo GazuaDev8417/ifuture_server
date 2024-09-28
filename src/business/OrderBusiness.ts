@@ -47,8 +47,16 @@ export default class OrderBusiness{
 
 
     deleteOrder = async(req:Request):Promise<void>=>{
-        const user = new Services().authToken(req)
+        new Services().authToken(req)
 
         await this.orderData.deleteOrder(req.params.id)
+    }
+
+
+    updateOrder = async(req:Request):Promise<void>=>{
+        await new Services().authToken(req)
+        const { quantity } = req.body
+
+        await this.orderData.updateOrder(quantity, req.params.id)
     }
 }

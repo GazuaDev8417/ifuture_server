@@ -41,4 +41,6 @@ app.post('/order', orderController.todo_orders)
 
 app.get('/orders/:id', orderController.ordersByClientAndRestaurant)
 
+app.patch('/order/:id', orderController.updateOrder)
+
 app.delete('/order/:id', orderController.deleteOrder)

@@ -49,12 +49,54 @@ export default class OrderController{
     }
 
 
+    cleanOrders = async(req:Request, res:Response):Promise<void>=>{
+        try{
+
+            await this.orderBusiness.cleanOrders(req)
+            
+            res.status(200).end()
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
     updateOrder = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             await this.orderBusiness.updateOrder(req)
 
             res.status(200).end()
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
+    endOrders = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            await this.orderBusiness.endOrders(req)
+            
+            res.status(200).send('Pedido finalizado')
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
+    activeOrders = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            const orders = await this.orderBusiness.activeOrders(req)
+            
+            res.status(200).send(orders)
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

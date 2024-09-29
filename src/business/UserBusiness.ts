@@ -126,4 +126,12 @@ export default class UserBusiness{
         )
     }
 
+
+    updateUser = async(req:Request):Promise<void>=>{
+        const user = await new Services().authToken(req)
+        const { username, email, cpf } = req.body
+
+        await this.userData.updateUser(username, email, cpf, user.id)
+    }
+
 }

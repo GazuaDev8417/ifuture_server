@@ -81,4 +81,17 @@ export default class UserData extends ConnectToDatabase{
         }
     }
 
+
+    updateUser = async(username:string, email:string, cpf:string, id:string):Promise<void>=>{
+        try{
+
+            await ConnectToDatabase.con(this.USER_TABLE).update({
+                username, email, cpf
+            }).where({ id })
+            
+        }catch(e:any){
+            throw new Error(`Erro ao atualizar usuário: ${e}`)
+        }
+    }
+
 }

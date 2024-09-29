@@ -21,7 +21,8 @@ export default class OrderBusiness{
             quantity * price,
             `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
             restaurant,
-            user.id
+            user.id,
+            'REQUESTED'
         )
         
 
@@ -40,16 +41,23 @@ export default class OrderBusiness{
     ordersByClientAndRestaurant = async(req:Request):Promise<OrderModel[]>=>{
          const user = await new Services().authToken(req)
 
-         const orders = await this.orderData.ordersByClientAndRestaurant(user.id, req.params.id)
+         const orders = await this.orderData.ordersByClientAndRestaurant(user.id)
         
          return orders
     }
 
 
     deleteOrder = async(req:Request):Promise<void>=>{
-        new Services().authToken(req)
+        await new Services().authToken(req)
 
         await this.orderData.deleteOrder(req.params.id)
+    }
+
+
+    cleanOrders = async(req:Request):Promise<void>=>{
+        const user = await new Services().authToken(req)
+
+        await this.orderData.cleanOrders(user.id)
     }
 
 
@@ -58,5 +66,20 @@ export default class OrderBusiness{
         const { quantity } = req.body
 
         await this.orderData.updateOrder(quantity, req.params.id)
+    }
+
+
+    endOrders = async(req:Request):Promise<void>=>{
+        //const user = await new Services().authToken(req)
+        
+        await this.orderData.endDorders(req.params.id)
+    }
+
+    
+    activeOrders = async(req:Request):Promise<OrderModel[]>=>{
+        const user = await new Services().authToken(req)
+        const orders = await this.orderData.activeOrders(user.id)
+
+        return orders
     }
 }

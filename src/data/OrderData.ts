@@ -33,12 +33,30 @@ export default class OrderData extends ConnectToDatabase{
     }
 
 
-    ordersByClientAndRestaurant = async(client:string, restaurant:string):Promise<OrderModel[]>=>{
+    ordersByClientAndRestaurant = async(client:string):Promise<OrderModel[]>=>{
         try{
             
-            const order = await ConnectToDatabase.con(this.ORDER_TABLE).where({ client })
+            const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
+                client,
+                state: 'REQUESTED'
+            })
             
-            return order
+            return orders
+        }catch(e:any){
+            throw new Error(`Erro ao buscar pedido: ${e}`)
+        }
+    }
+
+
+    activeOrders = async(client:string):Promise<OrderModel[]>=>{
+        try{
+            
+            const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
+                client,
+                state: 'FINISHED'
+            })
+
+            return activeOrders
         }catch(e:any){
             throw new Error(`Erro ao buscar pedido: ${e}`)
         }
@@ -69,6 +87,30 @@ export default class OrderData extends ConnectToDatabase{
 
         }catch(e:any){
             throw new Error(`Erro ao buscar pedido: ${e}`)
+        }
+    }
+
+
+    endDorders = async(id:string):Promise<void>=>{
+        try{
+
+            await ConnectToDatabase.con(this.ORDER_TABLE).update({
+                state: 'FINISHED'
+            }).where({ client: id })
+
+        }catch(e:any){
+            throw new Error(`Erro ao finalizar pedidos: ${e}`)
+        }
+    }
+
+
+    cleanOrders = async(client:string):Promise<void>=>{
+        try{
+
+            await ConnectToDatabase.con(this.ORDER_TABLE).delete().where({ client })
+
+        }catch(e:any){
+            throw new Error(`Erro ao finalizar pedidos: ${e}`)
         }
     }
    

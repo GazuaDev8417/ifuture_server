@@ -28,7 +28,8 @@ app.post('/login', userController.login)
 
 app.get('/profile', userController.getProfile)
 
-app.patch('/address/:id', userController.registAddress)
+app.patch('/address', userController.registAddress)
+app.patch('/user', userController.updateUser)
 //RESTAURANT FIELD
 app.post('/signup_restaurant', restaurantController.singupRestaurant)
 app.post('/products', restaurantController.insertProduct)
@@ -39,8 +40,11 @@ app.get('/restaurant_products/:id', restaurantController.productsByRestaurant)
 //ORDERS
 app.post('/order', orderController.todo_orders)
 
-app.get('/orders/:id', orderController.ordersByClientAndRestaurant)
+app.get('/orders', orderController.ordersByClientAndRestaurant)
+app.get('/active_orders', orderController.activeOrders)
 
 app.patch('/order/:id', orderController.updateOrder)
+app.patch('/finished_orders/:id', orderController.endOrders)
 
 app.delete('/order/:id', orderController.deleteOrder)
+app.delete('/orders', orderController.cleanOrders)

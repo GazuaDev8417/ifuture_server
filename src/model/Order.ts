@@ -14,7 +14,8 @@ export default class Orders extends ConnectToDatabase{
         private total:number,
         private moment:string,
         private restaurant:string ,
-        private client:string 
+        private client:string,
+        private state:string 
     ){ super() }
 
     save = async()=>{
@@ -27,8 +28,9 @@ export default class Orders extends ConnectToDatabase{
                 quantity: this.quantity,
                 total: this.total,
                 moment: this.moment,
-                restaurant: this.restaurant ,
-                client: this.client 
+                restaurant: this.restaurant,
+                client: this.client,
+                state: this.state
             })
         }catch(e){
             throw new Error(`Falha ao realizar pedido: ${e}`)

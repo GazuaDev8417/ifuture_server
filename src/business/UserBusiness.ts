@@ -134,4 +134,28 @@ export default class UserBusiness{
         await this.userData.updateUser(username, email, cpf, user.id)
     }
 
+
+    checkAddress = async(req:Request):Promise<User>=>{
+        const user = await new Services().authToken(req)
+
+        const address = await this.userData.checkAddress(user.id)
+        const checedAddress = Object.values(address).some(value => value !== null)
+
+        if(!checedAddress){
+            throw{
+                statusCode: 404,
+                error: new Error('Usuário sem endereço cadastrado')
+            }
+        }
+        
+        return address
+    }
+
+
+    deleteUser = async(req:Request):Promise<void>=>{
+        const user = await new Services().authToken(req)
+
+        await this.userData.deleteUser(user.id)
+    }
+
 }

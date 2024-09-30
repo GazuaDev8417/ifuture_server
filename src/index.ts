@@ -27,9 +27,12 @@ app.post('/signup', userController.signup)
 app.post('/login', userController.login)
 
 app.get('/profile', userController.getProfile)
+app.get('/address', userController.checkAddress)
 
 app.patch('/address', userController.registAddress)
 app.patch('/user', userController.updateUser)
+
+app.delete('/user', userController.deleteUser)
 //RESTAURANT FIELD
 app.post('/signup_restaurant', restaurantController.singupRestaurant)
 app.post('/products', restaurantController.insertProduct)

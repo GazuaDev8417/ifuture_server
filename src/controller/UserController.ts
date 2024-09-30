@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import UserBusiness from "../business/UserBusiness"
+import User from "../model/User"
 
 
 
@@ -70,6 +71,34 @@ export default class UserController{
             await this.userBusiness.updateUser(req)
 
             res.status(200).send('Usuário atualizado com sucesso!')
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
+    checkAddress = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            const address:User = await this.userBusiness.checkAddress(req)
+
+            res.status(200).send(address)
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
+    deleteUser = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            await this.userBusiness.deleteUser(req)
+
+            res.status(200).send('Usuário excluído')
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

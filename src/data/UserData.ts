@@ -94,4 +94,30 @@ export default class UserData extends ConnectToDatabase{
         }
     }
 
+
+    checkAddress = async(id:string):Promise<User>=>{
+        try{
+
+            const [address] = await ConnectToDatabase.con(this.USER_TABLE).select(
+                'street', 'number', 'neighbourhood', 'city', 'state'
+            ).where({ id })
+            
+            return address
+
+        }catch(e:any){
+            throw new Error(`Erro ao atualizar usuário: ${e}`)
+        }
+    }
+
+
+    deleteUser = async(id:string):Promise<void>=>{
+        try{
+
+            await ConnectToDatabase.con(this.USER_TABLE).del().where({ id })
+
+        }catch(e:any){
+            throw new Error(`Erro ao excluir usuário: ${e}`)
+        }
+    }
+
 }

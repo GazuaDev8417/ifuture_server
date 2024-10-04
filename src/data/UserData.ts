@@ -6,6 +6,7 @@ import { UserModel } from "../model/typesAndInterfaces"
 
 export default class UserData extends ConnectToDatabase{
     protected USER_TABLE = 'users'
+    protected ORDER_TABLE = 'orders'
 //USER FIELD 
     create = async(user:User):Promise<void>=>{
         try{
@@ -114,6 +115,7 @@ export default class UserData extends ConnectToDatabase{
         try{
 
             await ConnectToDatabase.con(this.USER_TABLE).del().where({ id })
+            await ConnectToDatabase.con(this.ORDER_TABLE).del().where({ client: id })
 
         }catch(e:any){
             throw new Error(`Erro ao excluir usuário: ${e}`)

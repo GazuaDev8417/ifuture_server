@@ -23,7 +23,7 @@ export default class OrderData extends ConnectToDatabase{
         try{
 
             const [order] = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                product, restaurant, client
+                product, restaurant, client, state: 'Requested'
             })
             
             return order

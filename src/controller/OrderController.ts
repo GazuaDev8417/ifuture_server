@@ -38,9 +38,9 @@ export default class OrderController{
     deleteOrder = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            await this.orderBusiness.deleteOrder(req)
+            const orders = await this.orderBusiness.deleteOrder(req)
             
-            res.status(200).end()
+            res.status(200).send(orders)
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

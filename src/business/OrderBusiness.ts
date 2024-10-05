@@ -47,10 +47,13 @@ export default class OrderBusiness{
     }
 
 
-    deleteOrder = async(req:Request):Promise<void>=>{
-        await new Services().authToken(req)
+    deleteOrder = async(req:Request):Promise<OrderModel[]>=>{
+        const user = await new Services().authToken(req)
+        const orders = await this.orderData.ordersByClientAndRestaurant(user.id)
 
         await this.orderData.deleteOrder(req.params.id)
+
+        return orders
     }
 
 

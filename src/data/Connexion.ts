@@ -1,15 +1,19 @@
 import knex from 'knex'
+import { config } from 'dotenv'
+
+config()
 
 
 export default abstract class ConnectToDatabase{
     protected static con = knex({
-        client: 'mysql2',
-        connection: {
+        client: 'pg',
+        connection: process.env.NEONTECH_DB
+        /* connection: {
             host: 'localhost',
             user: 'root',
             password: 'alfadb',
             database: 'ifuture'
-        }
+        } */
     })
 
     public static testConnexion = async():Promise<void>=>{

@@ -8,10 +8,10 @@ export default class Restaurant extends ConnectToDatabase{
     constructor(
         private address:string,
         private category:string,
-        private deliveryTime:number,
+        private deliverytime:number,
         private description:string,
         private id:string,
-        private logoUrl:string,
+        private logourl:string,
         private name:string,
         private shipping:number
     ){ super() }
@@ -21,10 +21,10 @@ export default class Restaurant extends ConnectToDatabase{
             await ConnectToDatabase.con(this.RESTAURANT_TABLE).insert({
                 address: this.address,
                 category: this.category,
-                deliveryTime: this.deliveryTime,
+                deliverytime: this.deliverytime,
                 description: this.description,
                 id: this.id,
-                logoUrl: this.logoUrl,
+                logourl: this.logourl,
                 name: this.name,
                 shipping: this.shipping
             })

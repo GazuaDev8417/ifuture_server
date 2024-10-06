@@ -4,8 +4,10 @@ import * as jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import UserData from '../data/UserData'
 import { UserModel } from '../model/typesAndInterfaces'
+import { config } from 'dotenv'
 
 
+config()
 
 
 type TokenData = {
@@ -24,7 +26,7 @@ export default class Services{
     token = (payload:string):string=>{
         return jwt.sign(
             { payload },
-            '1234567890',
+            process.env.JWT_KEY as string,
             {}
         )
     }
@@ -32,7 +34,7 @@ export default class Services{
     tokenData = (token:string):TokenData=>{
         return jwt.verify(
             token,
-            '1234567890'
+            process.env.JWT_KEY as string
         ) as TokenData
     }
 

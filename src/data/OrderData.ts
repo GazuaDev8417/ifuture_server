@@ -107,10 +107,13 @@ export default class OrderData extends ConnectToDatabase{
     cleanOrders = async(client:string):Promise<void>=>{
         try{
 
-            await ConnectToDatabase.con(this.ORDER_TABLE).delete().where({ client })
+            await ConnectToDatabase.con(this.ORDER_TABLE).delete().where({
+                client,
+                state: 'FINISHED'
+            })
 
         }catch(e:any){
-            throw new Error(`Erro ao finalizar pedidos: ${e}`)
+            throw new Error(`Erro ao limpar histórico: ${e}`)
         }
     }
    

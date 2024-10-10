@@ -25,6 +25,7 @@ const orderController = new OrderController(
 
 app.post('/signup', userController.signup)
 app.post('/login', userController.login)
+app.post('/cpf', userController.bringCPF)
 
 app.get('/profile', userController.getProfile)
 app.get('/address', userController.checkAddress)

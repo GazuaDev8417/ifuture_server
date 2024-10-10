@@ -64,4 +64,11 @@ export default class Services{
     
         return user
     }
+
+    convertTokenToCPF = async(req:Request):Promise<string>=>{
+        const cpfToken = req.body.cpf 
+        const tokenData = new Services().tokenData(cpfToken)
+
+        return tokenData.payload
+    }
 }

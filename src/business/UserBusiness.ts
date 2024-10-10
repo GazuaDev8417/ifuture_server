@@ -65,7 +65,7 @@ export default class UserBusiness{
 
         const id = new Services().idGenerator()
         const hash = new Services().hash(password)
-        const hashCPF = new Services().hash(cpf)
+        const hashCPF = new Services().token(cpf)
         const token = new Services().token(id)
 
         const user = new User(id, name, email, hashCPF, hash)
@@ -81,6 +81,13 @@ export default class UserBusiness{
         const user = await new Services().authToken(req)
 
         return user
+    }
+
+
+    bringCPF = async(req:Request):Promise<string>=>{
+        const cpf = await new Services().convertTokenToCPF(req)
+
+        return cpf
     }
 
 

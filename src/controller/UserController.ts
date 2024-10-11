@@ -37,7 +37,7 @@ export default class UserController{
     }
 
 
-    bringCPF = async(req:Request, res:Response):Promise<void>=>{
+    /* bringCPF = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const cpf = await this.userBusiness.bringCPF(req)
@@ -48,7 +48,7 @@ export default class UserController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
     login = async(req:Request, res:Response):Promise<void>=>{

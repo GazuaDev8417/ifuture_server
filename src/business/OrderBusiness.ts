@@ -57,10 +57,16 @@ export default class OrderBusiness{
     }
 
 
-    cleanOrders = async(req:Request):Promise<void>=>{
+    cleanOrdersHistory = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
 
-        await this.orderData.cleanOrders(user.id)
+        await this.orderData.cleanOrdersHistory(user.id)
+    }
+
+    cleanRequestedOrders = async(req:Request):Promise<void>=>{
+        const user = await new Services().authToken(req)
+
+        await this.orderData.cleanRequestedOrders(user.id)
     }
 
 

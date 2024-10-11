@@ -12,7 +12,7 @@ export default class OrderController{
 
             await this.orderBusiness.todo_orders(req)
 
-            res.status(200).send('Pedido realizado com sucesso')
+            res.status(200).send(`${req.body.product} adicionado aos pedidos`)
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message
@@ -49,10 +49,23 @@ export default class OrderController{
     }
 
 
-    cleanOrders = async(req:Request, res:Response):Promise<void>=>{
+    cleanRequestedOrders = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            await this.orderBusiness.cleanOrders(req)
+            await this.orderBusiness.cleanRequestedOrders(req)
+            
+            res.status(200).end()
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+    cleanOrdersHistory = async(req:Request, res:Response):Promise<void>=>{
+        try{
+
+            await this.orderBusiness.cleanOrdersHistory(req)
             
             res.status(200).end()
         }catch(e:any){

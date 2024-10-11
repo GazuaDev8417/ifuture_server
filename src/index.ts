@@ -51,4 +51,5 @@ app.patch('/order/:id', orderController.updateOrder)
 app.patch('/finished_orders/:id', orderController.endOrders)
 
 app.delete('/order/:id', orderController.deleteOrder)
-app.delete('/orders', orderController.cleanOrders)
+app.delete('/orders', orderController.cleanOrdersHistory)
+app.delete('/requested_orders', orderController.cleanRequestedOrders)

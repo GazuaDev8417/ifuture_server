@@ -65,10 +65,10 @@ export default class UserBusiness{
 
         const id = new Services().idGenerator()
         const hash = new Services().hash(password)
-        //const hashCPF = new Services().token(cpf)
+        const hashCPF = new Services().token(cpf)
         const token = new Services().token(id)
 
-        const user = new User(id, name, email, cpf, hash)
+        const user = new User(id, name, email, hashCPF, hash)
 
         await this.userData.create(user)
 
@@ -79,16 +79,10 @@ export default class UserBusiness{
 
     getProfile = async(req:Request):Promise<UserModel>=>{
         const user = await new Services().authToken(req)
+        
 
         return user
     }
-
-
-    /* bringCPF = async(req:Request):Promise<string>=>{
-        const cpf = await new Services().convertTokenToCPF(req)
-console.log('qual foi?')
-        return cpf
-    } */
 
 
     login = async(req:Request):Promise<string>=>{

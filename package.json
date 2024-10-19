@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "dev": "nodemon --transpile-only src/index.ts"
+    "dev": "nodemon --transpile-only src/index.ts",
+    "migrations": "tsc && node dist/data/DatabaseManager.js"
   },
   "keywords": [],
   "author": "",

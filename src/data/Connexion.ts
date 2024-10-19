@@ -7,13 +7,7 @@ config()
 export default abstract class ConnectToDatabase{
     protected static con = knex({
         client: 'pg',
-        connection: process.env.NEONTECH_DB
-        /* connection: {
-            host: 'localhost',
-            user: 'root',
-            password: 'alfadb',
-            database: 'ifuture'
-        } */
+        connection: /* process.env.NEONTECH_DB */'postgresql://GazuaDev8417:oyxXs5u0rZim@ep-green-dew-a56t2dck.us-east-2.aws.neon.tech/tests?sslmode=require'
     })
 
     public static testConnexion = async():Promise<void>=>{

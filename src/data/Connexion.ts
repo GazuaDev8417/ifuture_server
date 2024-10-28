@@ -6,7 +6,7 @@ config()
 
 export default abstract class ConnectToDatabase{
     protected static con = knex({
-        // client: 'mysql2',
+        client: 'pg',
         connection: process.env.NEONTECH_DB
         /* connection: {
             host: 'localhost',

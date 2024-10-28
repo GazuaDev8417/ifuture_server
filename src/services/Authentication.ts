@@ -54,7 +54,7 @@ export default class Services{
         const token = req.headers.authorization
         const tokenData =  new Services().tokenData(token as string)
         const user = await new UserData().findById(tokenData.payload)
-    console.log(user)
+    
         if(!user){
             throw{
                 statusCode: 404,

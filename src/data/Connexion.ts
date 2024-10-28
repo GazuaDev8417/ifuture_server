@@ -6,14 +6,14 @@ config()
 
 export default abstract class ConnectToDatabase{
     protected static con = knex({
-        client: 'mysql2',
-        // connection: process.env.NEONTECH_DB
-        connection: {
+        // client: 'mysql2',
+        connection: process.env.NEONTECH_DB
+        /* connection: {
             host: 'localhost',
             user: 'root',
             password: 'alfadb',
             database: 'ifuture'
-        }
+        } */
     })
 
     public static testConnexion = async():Promise<void>=>{

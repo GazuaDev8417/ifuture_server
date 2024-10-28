@@ -2,7 +2,7 @@ import { Request } from "express"
 import UserData from "../data/UserData"
 import Services from "../services/Authentication"
 import User from "../model/User"
-import { UserModel } from "../model/typesAndInterfaces"
+import { cepModel, UserModel } from "../model/typesAndInterfaces"
 
 
 
@@ -65,7 +65,7 @@ export default class UserBusiness{
 
         const id = new Services().idGenerator()
         const hash = new Services().hash(password)
-        const hashCPF = new Services().token(cpf)
+        const hashCPF = new Services().hash(cpf)
         const token = new Services().token(id)
 
         const user = new User(id, name, email, hashCPF, hash)
@@ -121,9 +121,28 @@ export default class UserBusiness{
     registAddress = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
         const { street, cep, number, neighbourhood, city, state, complement } = req.body
+       
+        let finalStreet = street
+        let finalNeighbourhood = neighbourhood
+        let finalCity = city
+        let finalState = state
+
+        if(!cep){
+            throw new Error('Digie ao menos o CEP do endereço')
+        }else if(cep.length !== 8){
+            throw new Error('CEP inválido!')
+        }else{
+            const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            const data:cepModel = await res.json()
+
+            finalStreet = !street ? data.logradouro : street
+            finalNeighbourhood = !neighbourhood ? data.bairro : neighbourhood
+            finalCity = !city ? data.localidade : city
+            finalState = !state ? data.estado : state
+        }
         
         await this.userData.registAddress(
-            street, cep, number, neighbourhood, city, state, complement, user.id
+            finalStreet, cep, number, finalNeighbourhood, finalCity, finalState, complement, user.id
         )
     }
 
@@ -131,6 +150,10 @@ export default class UserBusiness{
     updateUser = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
         const { username, email, cpf } = req.body
+        
+        if(!username || !email || !cpf){
+            throw new Error('Preencha os campos')
+        }
 
         await this.userData.updateUser(username, email, cpf, user.id)
     }

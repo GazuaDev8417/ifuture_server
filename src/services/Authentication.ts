@@ -52,9 +52,9 @@ export default class Services{
 
     authToken = async(req:Request):Promise<UserModel>=>{
         const token = req.headers.authorization
-        const tokenData = new Services().tokenData(token as string)
-        const user = new UserData().findById(tokenData.payload)
-    
+        const tokenData =  new Services().tokenData(token as string)
+        const user = await new UserData().findById(tokenData.payload)
+    console.log(user)
         if(!user){
             throw{
                 statusCode: 404,

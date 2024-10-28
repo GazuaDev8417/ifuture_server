@@ -66,7 +66,7 @@ export default class UserData extends ConnectToDatabase{
         id:string
     ):Promise<void>=>{
         try{
-
+            
             await ConnectToDatabase.con(this.USER_TABLE).update({
                 street,
                 cep,

@@ -13,6 +13,8 @@ export default class UserBusiness{
 //USER FIELD
     signup = async(req:Request):Promise<string>=>{
         const { name, email, cpf, password, confirmPass } = req.body
+        const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
+
 
         if(!name || !email || !cpf || !password || !confirmPass){
             throw{
@@ -20,6 +22,11 @@ export default class UserBusiness{
                 error: new Error('Preencha os campos')
             }
         }
+
+        if(!regex.test(email)){
+            throw new Error('Email inválido!')
+        }
+
 
         const allUsers = await this.userData.getAllUsers()
         if(allUsers.length > 0){

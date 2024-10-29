@@ -94,6 +94,15 @@ export default class OrderData extends ConnectToDatabase{
     endDorders = async(id:string):Promise<void>=>{
         try{
 
+            const orders:OrderModel[] = await ConnectToDatabase.con(this.ORDER_TABLE).where({
+                client: id, state: 'REQUESTED'
+            })
+
+            
+            if(orders.length === 0){
+                throw new Error('Todos os pedidos já foram finalizados')
+            }
+
             await ConnectToDatabase.con(this.ORDER_TABLE).update({
                 state: 'FINISHED'
             }).where({ client: id })

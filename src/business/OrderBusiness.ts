@@ -74,14 +74,18 @@ export default class OrderBusiness{
         await new Services().authToken(req)
         const { quantity } = req.body
 
+        if(!quantity){
+            throw new Error('Insira a quantidade do produto')
+        }
+
         await this.orderData.updateOrder(quantity, req.params.id)
     }
 
 
     endOrders = async(req:Request):Promise<void>=>{
-        //const user = await new Services().authToken(req)
+        const user = await new Services().authToken(req)
         
-        await this.orderData.endDorders(req.params.id)
+        await this.orderData.endDorders(user.id)
     }
 
     

@@ -48,7 +48,7 @@ app.get('/orders', orderController.ordersByClientAndRestaurant)
 app.get('/active_orders', orderController.activeOrders)
 
 app.patch('/order/:id', orderController.updateOrder)
-app.patch('/finished_orders/:id', orderController.endOrders)
+app.patch('/finished_orders', orderController.endOrders)
 
 app.delete('/order/:id', orderController.deleteOrder)
 app.delete('/orders', orderController.cleanOrdersHistory)

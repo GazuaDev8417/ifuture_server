@@ -24,7 +24,7 @@ export default class RestaurantController{
     getRestaurants = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            const restaurants = await this.restaurantBusiness.getRestaurants()
+            const restaurants = await this.restaurantBusiness.getRestaurants(req)
 
             res.status(200).send(restaurants)
         }catch(e:any){
@@ -38,7 +38,7 @@ export default class RestaurantController{
     restaurantById = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            const restaurant = await this.restaurantBusiness.restaurantById(req.params.id)
+            const restaurant = await this.restaurantBusiness.restaurantById(req)
 
             res.status(200).send(restaurant)
         }catch(e:any){
@@ -66,7 +66,7 @@ export default class RestaurantController{
     productsByRestaurant = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            const products = await this.restaurantBusiness.productsByRestaurant(req.params.id)
+            const products = await this.restaurantBusiness.productsByRestaurant(req)
 
             res.status(201).send(products)
         }catch(e:any){

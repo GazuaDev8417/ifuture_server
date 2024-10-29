@@ -8,12 +8,6 @@ export default abstract class ConnectToDatabase{
     protected static con = knex({
         client: 'pg',
         connection: process.env.NEONTECH_DB
-        /* connection: {
-            host: 'localhost',
-            user: 'root',
-            password: 'alfadb',
-            database: 'ifuture'
-        } */
     })
 
     public static testConnexion = async():Promise<void>=>{

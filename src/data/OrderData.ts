@@ -116,10 +116,19 @@ export default class OrderData extends ConnectToDatabase{
     cleanOrdersHistory = async(client:string):Promise<void>=>{
         try{
 
+            const orders:OrderModel[] = await ConnectToDatabase.con(this.ORDER_TABLE).where({
+                client, state: 'FINISHED'
+            })
+
+            if(orders.length === 0){
+                throw new Error('Sua lista de histórico já está vazia!')
+            }
+
             await ConnectToDatabase.con(this.ORDER_TABLE).delete().where({
                 client,
                 state: 'FINISHED'
             })
+
 
         }catch(e:any){
             throw new Error(`Erro ao limpar histórico: ${e}`)
@@ -129,6 +138,15 @@ export default class OrderData extends ConnectToDatabase{
     
     cleanRequestedOrders = async(client:string):Promise<void>=>{
         try{
+
+
+            const orders:OrderModel[] = await ConnectToDatabase.con(this.ORDER_TABLE).where({
+                client, state: 'REQUESTED'
+            })
+
+            if(orders.length === 0){
+                throw new Error('Sua lista de pedidos já está vazia!')
+            }
 
             await ConnectToDatabase.con(this.ORDER_TABLE).delete().where({
                 client,

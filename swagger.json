@@ -1,0 +1,256 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "iFuture API Documentation",
+      "version": "1.0.0",
+      "description": "API documentation for the iFuture project"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3003",
+        "description": "Local server"
+      }
+    ],
+    "paths": {
+      "/signup": {
+        "post": {
+          "summary": "User Signup",
+          "description": "Registers a new user",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string", "example": "John Doe" },
+                    "email": { "type": "string", "example": "johndoe@example.com" },
+                    "password": { "type": "string", "example": "password123" }
+                  },
+                  "required": ["name", "email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM" }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "summary": "User Login",
+          "description": "Logs in an existing user",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string", "example": "johndoe@example.com" },
+                    "password": { "type": "string", "example": "password123" }
+                  },
+                  "required": ["email", "password"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "User logged in successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM" }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid credentials"
+            }
+          }
+        }
+      },
+      "/profile": {
+        "get": {
+          "summary": "Get Profile",
+          "description": "Retrieves the profile of the logged-in user",
+          "responses": {
+            "200": {
+              "description": "User profile retrieved",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer", "example": 1 },
+                      "name": { "type": "string", "example": "John Doe" },
+                      "email": { "type": "string", "example": "johndoe@example.com" }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/address": {
+        "patch": {
+          "summary": "Update Profile's address",
+          "description": "Updates the profile's address of the logged-in user",
+          "requestBody": {
+            "200": {
+              "description": "User profile's address updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "street": { "type": "string", "example": "Rua Meyer" },
+                      "number": { "type": "string", "example": "132" },
+                      "neighbourhood": { "type": "string", "example": "Jardim Higienópolis" },
+                      "city": { "type": "string", "example": "Londrina" },
+                      "state": { "type": "string", "example": "Paraná" }
+                    }
+                  }
+                }
+              }
+            },
+            "responses": {
+                  "200": {
+                    "description": "Update profile's address",
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "message": { "type": "string", "example": "Profile's updated successfully" }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "401": {
+                    "description": "Invalid credentials"
+                  }
+                }
+              },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        },
+        "get": {
+          "summary": "Get Profile's address",
+          "description": "Retrieves the profile's address of the logged-in user",
+          "responses": {
+            "200": {
+              "description": "User profile's address retrieved",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "street": { "type": "string", "example": "Rua Meyer" },
+                      "number": { "type": "string", "example": "132" },
+                      "neighbourhood": { "type": "string", "example": "Jardim Higienópolis" },
+                      "city": { "type": "string", "example": "Londrina" },
+                      "state": { "type": "string", "example": "Paraná" }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/restaurants": {
+        "get": {
+          "summary": "Get Restaurants",
+          "description": "Retrieves a list of all restaurants",
+          "responses": {
+            "200": {
+              "description": "List of restaurants",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer", "example": 1 },
+                        "name": { "type": "string", "example": "Restaurant A" },
+                        "address": { "type": "string", "example": "123 Main St" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/order": {
+        "post": {
+          "summary": "Create Order",
+          "description": "Creates a new order",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "restaurantId": { "type": "integer", "example": 1 },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "productId": { "type": "integer", "example": 101 },
+                          "quantity": { "type": "integer", "example": 2 }
+                        }
+                      }
+                    }
+                  },
+                  "required": ["restaurantId", "items"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Order created successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }
+      }
+    }
+  
+  

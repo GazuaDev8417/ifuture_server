@@ -100,13 +100,13 @@ export default class UserData extends ConnectToDatabase{
         try{
 
             const [address] = await ConnectToDatabase.con(this.USER_TABLE).select(
-                'street', 'number', 'neighbourhood', 'city', 'state'
+                'street', 'cep', 'number', 'neighbourhood', 'city', 'state', 'complement'
             ).where({ id })
             
             return address
 
         }catch(e:any){
-            throw new Error(`Erro ao atualizar usuário: ${e}`)
+            throw new Error(`Erro ao atualizar endereço: ${e}`)
         }
     }
 

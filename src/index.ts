@@ -8,8 +8,7 @@ import RestaurantData from "./data/RestaurantData"
 import UserController from "./controller/UserController"
 import UserBusiness from "./business/UserBusiness"
 import UserData from "./data/UserData"
-import swaggerUi from 'swagger-ui-express'
-import * as SwaggerDocument from './swagger.json'
+
 
 
 const restaurantController = new RestaurantController(

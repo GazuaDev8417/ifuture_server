@@ -7,19 +7,24 @@ import { ProductModel } from "../model/typesAndInterfaces"
 
 
 
+
 export default class RestaurantBusiness{
     constructor(
         private restaurantData:RestaurantData
     ){}
     
     signupRestaurant = async(req:Request):Promise<void>=>{
-        const { address , category, deliveryTime, description, logourl, name, shipping }= req.body
+        const { address , category, deliveryTime, description, logourl, name, shipping, cnpj } = req.body
+        const cnpjAPI = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`
+        const searchByCnpj = await  fetch(cnpjAPI)
+        const data = await searchByCnpj.json()
+        console.log(data)
         const id = new Services().idGenerator()
-        const restaurant = new Restaurant(
-            address , category, deliveryTime, description, id, logourl, name, shipping
+        /* const restaurant = new Restaurant(
+            address , category, deliveryTime, description, id, logourl, name, shipping, cnpj
         )
 
-        const registeredRestaurant = await this.restaurantData.restaurantByImage(logourl)
+        const registeredRestaurant = await this.restaurantData.restaurantByCnpj(cnpj)
         if(registeredRestaurant){
             throw{
                 statusCode: 403,
@@ -27,7 +32,7 @@ export default class RestaurantBusiness{
             }
         }
 
-        await this.restaurantData.signupRestaurant(restaurant)
+        await this.restaurantData.signupRestaurant(restaurant) */
     }
 
 

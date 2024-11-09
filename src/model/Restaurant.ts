@@ -13,7 +13,8 @@ export default class Restaurant extends ConnectToDatabase{
         private id:string,
         private logourl:string,
         private name:string,
-        private shipping:number
+        private shipping:number,
+        private cnpj:string
     ){ super() }
 
     save = async()=>{
@@ -26,7 +27,8 @@ export default class Restaurant extends ConnectToDatabase{
                 id: this.id,
                 logourl: this.logourl,
                 name: this.name,
-                shipping: this.shipping
+                shipping: this.shipping,
+                cnpj: this.cnpj
             })
         }catch(e){
             throw new Error(`Erro ao registrar restaurante: ${e}`)

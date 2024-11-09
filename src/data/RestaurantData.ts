@@ -44,10 +44,10 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    restaurantByImage = async(logourl:string):Promise<Restaurant>=>{
+    restaurantByCnpj = async(cnpj:string):Promise<Restaurant>=>{
         try{
 
-            const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE).where({ logourl })
+            const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE).where({ cnpj })
 
             return restaurant
         }catch(e:any){

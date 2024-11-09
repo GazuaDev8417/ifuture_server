@@ -156,22 +156,18 @@ export default class UserBusiness{
 
     updateUser = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
-        const { username, email, cpf } = req.body
+        const { username, email } = req.body
         const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
 
-        if(!username || !email || !cpf){
+        if(!username || !email ){
             throw new Error('Preencha os campos')
-        }
-
-        if(cpf.length !== 11 || isNaN(cpf)){
-            throw new Error('CPF inválido!')
         }
 
         if(!regex.test(email)){
             throw new Error('Email inválido!')
         }
 
-        await this.userData.updateUser(username, email, cpf, user.id)
+        await this.userData.updateUser(username, email, user.id)
     }
 
 

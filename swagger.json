@@ -9,6 +9,10 @@
     {
       "url": "http://localhost:3003",
       "description": "Local server"
+    },
+    {
+      "url": "https://ifuture-server.vercel.app",
+      "description": "Remote server"
     }
   ],
   "paths": {
@@ -140,8 +144,8 @@
     },
     "/address": {
       "patch": {
-        "summary": "Update Profile's address",
-        "description": "Regists and updates the profile's address of the logged-in user",
+        "summary": "Regists or updates Profile's address",
+        "description": "Regists or updates the profile's address of the logged-in user",
         "parameters": [
           {
             "name": "Authorization",
@@ -215,7 +219,7 @@
                   "type": "object",
                   "properties": {
                     "street": { "type": "string", "example": "Rua Meyer" },
-                    "cep": { "type": "string", "example": "86015160" },
+                    "cep": { "type": "string", "example": "Rua Meyer" },
                     "number": { "type": "string", "example": "132" },
                     "neighbourhood": { "type": "string", "example": "Jardim Higienópolis" },
                     "city": { "type": "string", "example": "Londrina" },
@@ -225,8 +229,136 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized"
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user": {
+      "patch": {
+        "summary": "Updates the user's profile",
+        "description": "Updates the profile of the logged-in user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string", "example": "Updated name" },
+                  "email": { "type": "string", "example": "updatedemail@email.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile's user updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Profile's updated successfully" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user's account and all its orders",
+        "description": "Removes the account of the logged-in user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User's account was deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "User's account removed successfully" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/signup_restaurant": {
+      "post": {
+        "summary": "Restaurant Signup",
+        "description": "Registers a new restaurant",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": { "type": "string", "example": "" },
+                  "category": { "type": "string", "example": "Fast Food" },
+                  "deliveryTime": { "type": "integer", "example": 0 },
+                  "description": { "type": "string", "example": "O Jeronimo Burger é uma rede de restaurantes conhecida por seus hambúrgueres artesanais e ambiente descontraído." },
+                  "logourl": { "type": "string", "example": "https://villaromanashopping.com.br/wp-content/uploads/2019/10/Banner_-jeronimo.png" },
+                  "name": { "type": "string", "example": "New Guest" },
+                  "shipping": { "type": "integer", "example": 0 },
+                  "password": { "type": "string", "example": "123456" },
+                  "confirmPass": { "type": "string", "example": "123456" }
+                },
+                "required": ["category", "description", "name", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Restaurant registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
           }
         }
       }
@@ -235,6 +367,15 @@
       "get": {
         "summary": "Get Restaurants",
         "description": "Retrieves a list of all restaurants",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
         "responses": {
           "200": {
           "description": "List of restaurants",

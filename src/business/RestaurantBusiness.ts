@@ -14,15 +14,26 @@ export default class RestaurantBusiness{
     ){}
     
     signupRestaurant = async(req:Request):Promise<void>=>{
-        const { address , category, deliveryTime, description, logourl, name, shipping, cnpj } = req.body
+        const { address , deliveryTime, description, logourl, shipping, cnpj } = req.body
         const cnpjAPI = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`
         const searchByCnpj = await  fetch(cnpjAPI)
         const data = await searchByCnpj.json()
-        console.log(data)
         const id = new Services().idGenerator()
-        /* const restaurant = new Restaurant(
-            address , category, deliveryTime, description, id, logourl, name, shipping, cnpj
+        const restaurant = new Restaurant(
+            address, 
+            data.atividade_principal[0].text, 
+            deliveryTime, description, 
+            id, 
+            logourl, 
+            data.fantasia, 
+            shipping,
+            cnpj
         )
+        
+
+        if(data.situacao !== 'ATIVA'){
+            throw new Error('A empresa não está mais ativa')
+        }
 
         const registeredRestaurant = await this.restaurantData.restaurantByCnpj(cnpj)
         if(registeredRestaurant){
@@ -32,7 +43,7 @@ export default class RestaurantBusiness{
             }
         }
 
-        await this.restaurantData.signupRestaurant(restaurant) */
+        await this.restaurantData.signupRestaurant(restaurant)
     }
 
 

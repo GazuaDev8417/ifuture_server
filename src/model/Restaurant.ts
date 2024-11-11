@@ -8,13 +8,12 @@ export default class Restaurant extends ConnectToDatabase{
     constructor(
         private address:string,
         private category:string,
-        private deliverytime:number,
         private description:string,
         private id:string,
         private logourl:string,
         private name:string,
-        private shipping:number,
-        private cnpj:string
+        private cnpj:string,
+        private password:string
     ){ super() }
 
     save = async()=>{
@@ -22,13 +21,12 @@ export default class Restaurant extends ConnectToDatabase{
             await ConnectToDatabase.con(this.RESTAURANT_TABLE).insert({
                 address: this.address,
                 category: this.category,
-                deliverytime: this.deliverytime,
                 description: this.description,
                 id: this.id,
                 logourl: this.logourl,
                 name: this.name,
-                shipping: this.shipping,
-                cnpj: this.cnpj
+                cnpj: this.cnpj,
+                password: this.password
             })
         }catch(e){
             throw new Error(`Erro ao registrar restaurante: ${e}`)

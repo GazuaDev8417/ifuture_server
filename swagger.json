@@ -329,12 +329,11 @@
                 "type": "object",
                 "properties": {
                   "address": { "type": "string", "example": "" },
-                  "category": { "type": "string", "example": "Fast Food" },
                   "deliveryTime": { "type": "integer", "example": 0 },
                   "description": { "type": "string", "example": "O Jeronimo Burger é uma rede de restaurantes conhecida por seus hambúrgueres artesanais e ambiente descontraído." },
                   "logourl": { "type": "string", "example": "https://villaromanashopping.com.br/wp-content/uploads/2019/10/Banner_-jeronimo.png" },
-                  "name": { "type": "string", "example": "New Guest" },
                   "shipping": { "type": "integer", "example": 0 },
+                  "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" },
                   "password": { "type": "string", "example": "123456" },
                   "confirmPass": { "type": "string", "example": "123456" }
                 },

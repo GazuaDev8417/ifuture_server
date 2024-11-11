@@ -21,6 +21,20 @@ export default class RestaurantController{
     }
 
 
+    loginRestaurant = async(req:Request, res:Response):Promise<void>=>{
+        try{
+
+            const token = await this.restaurantBusiness.loginRestaurant(req)
+
+            res.status(200).send(token)
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
     getRestaurants = async(req:Request, res:Response):Promise<void>=>{
         try{
 

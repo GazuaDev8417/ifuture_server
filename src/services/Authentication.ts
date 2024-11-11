@@ -3,7 +3,8 @@ import { v4 } from 'uuid'
 import * as jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import UserData from '../data/UserData'
-import { UserModel } from '../model/typesAndInterfaces'
+import RestaurantData from '../data/RestaurantData'
+import { RestaurantModel, UserModel } from '../model/typesAndInterfaces'
 import { config } from 'dotenv'
 
 
@@ -63,6 +64,21 @@ export default class Services{
         }
     
         return user
+    }
+
+    authToken_restaurant = async(req:Request):Promise<RestaurantModel>=>{
+        const token = req.headers.authorization
+        const tokenData =  new Services().tokenData(token as string)
+        const restaurant = await new RestaurantData().restaurantById(tokenData.payload)
+    
+        if(!restaurant){
+            throw{
+                statusCode: 404,
+                error: new Error('Usuário não encontrado')
+            }
+        }
+    
+        return restaurant
     }
 
     

@@ -37,6 +37,7 @@ app.patch('/user', userController.updateUser)
 app.delete('/user', userController.deleteUser)
 //RESTAURANT FIELD
 app.post('/signup_restaurant', restaurantController.singupRestaurant)
+app.post('/login_restaurant', restaurantController.loginRestaurant)
 app.post('/products', restaurantController.insertProduct)
 
 app.get('/restaurants', restaurantController.getRestaurants)

@@ -3,7 +3,7 @@ import RestaurantData from "../data/RestaurantData"
 import Restaurant from "../model/Restaurant"
 import Product from "../model/Products"
 import Services from "../services/Authentication"
-import { ProductModel } from "../model/typesAndInterfaces"
+import { ProductModel, RestaurantModel } from "../model/typesAndInterfaces"
 
 
 
@@ -14,7 +14,10 @@ export default class RestaurantBusiness{
     ){}
     
     signupRestaurant = async(req:Request):Promise<string>=>{
-        const { address , deliveryTime, description, logourl, shipping, cnpj } = req.body
+        const { address , description, logourl, cnpj, password } = req.body
+        if(!cnpj){
+            throw new Error('CNPJ necessário para o cadastro!')
+        }
         const cnpjAPI = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`
         const searchByCnpj = await  fetch(cnpjAPI)
         const data = await searchByCnpj.json()
@@ -23,12 +26,12 @@ export default class RestaurantBusiness{
         const restaurant = new Restaurant(
             address, 
             data.atividade_principal[0].text, 
-            deliveryTime, description, 
+            description, 
             id, 
             logourl, 
-            data.fantasia, 
-            shipping,
-            cnpj
+            data.fantasia,
+            cnpj,
+            password
         )
         
 
@@ -50,7 +53,32 @@ export default class RestaurantBusiness{
     }
 
 
-    getRestaurants = async(req:Request):Promise<Restaurant[]>=>{
+    loginRestaurant = async(req:Request):Promise<string>=>{
+        const { cnpj, password } = req.body
+        
+        if(!cnpj || !password){
+            throw new Error('Insira suas crendencias para logar!')
+        }
+
+        
+        const registeredRestaurant = await this.restaurantData.restaurantByCnpj(cnpj)
+        if(!registeredRestaurant){
+            throw new Error('Registro não encontrado!')
+        }
+
+        const compare = new Services().compare(password, registeredRestaurant.password)
+        if(!compare){
+            throw new Error('Registro não encontrado!')
+        }
+
+        const token = new Services().token(registeredRestaurant.id)
+
+        
+        return token
+    }
+
+
+    getRestaurants = async(req:Request):Promise<RestaurantModel[]>=>{
         await new Services().authToken(req)
 
         const restaurants = await this.restaurantData.getRestaurants()
@@ -65,7 +93,7 @@ export default class RestaurantBusiness{
     }
 
 
-    restaurantById = async(req:Request):Promise<Restaurant>=>{
+    restaurantById = async(req:Request):Promise<RestaurantModel>=>{
         await new Services().authToken(req)
 
         const restaurant = await this.restaurantData.restaurantById(req.params.id)
@@ -81,17 +109,18 @@ export default class RestaurantBusiness{
 
 //PRODUCTS 
     insertProduct = async(req:Request):Promise<void>=>{
-        const { category, description, name, photoUrl, price, provider } = req.body
+        const restaurant = await new Services().authToken_restaurant(req)
+        const { category, description, name, photoUrl, price } = req.body
         const id = new Services().idGenerator()
         const product = new Product(
-            category, description, id, name, photoUrl, price, provider
+            category, description, id, name, photoUrl, price, restaurant.id
         )
 
         const registeredProduct = await this.restaurantData.findProductByImage(photoUrl)
         if(registeredProduct){
             throw{
                 statusCode: 403,
-                error: new Error('Produto já registrado')
+                error: new Error(`${registeredProduct.name} já está registrado!`)
             }
         }
 

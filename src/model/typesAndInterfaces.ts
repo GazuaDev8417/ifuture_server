@@ -15,7 +15,8 @@ export interface RestaurantModel {
     logourl:string,
     name:string,
     shipping:number,
-    cnpj:string
+    cnpj:string,
+    password:string
 }
 
 export interface ProductModel{

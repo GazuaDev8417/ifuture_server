@@ -20,7 +20,7 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    getRestaurants = async():Promise<Restaurant[]>=>{
+    getRestaurants = async():Promise<RestaurantModel[]>=>{
         try{
 
             const restaurants = await ConnectToDatabase.con(this.RESTAURANT_TABLE)
@@ -32,7 +32,7 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    restaurantById = async(id:string):Promise<Restaurant>=>{
+    restaurantById = async(id:string):Promise<RestaurantModel>=>{
         try{
 
             const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE).where({ id })
@@ -67,7 +67,7 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    findProductByImage = async(url:string):Promise<Product>=>{
+    findProductByImage = async(url:string):Promise<ProductModel>=>{
         try{
 
             const [product] = await ConnectToDatabase.con(this.PRODUCT_TABLE).where({ photoUrl: url })

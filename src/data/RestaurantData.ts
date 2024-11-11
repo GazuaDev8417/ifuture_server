@@ -1,8 +1,8 @@
 import ConnectToDatabase from "./Connexion"
 import Restaurant from "../model/Restaurant"
 import Product from "../model/Products"
-import { OrderModel, ProductModel } from "../model/typesAndInterfaces"
-import Orders from "../model/Order"
+import { ProductModel, RestaurantModel } from "../model/typesAndInterfaces"
+
 
 
 export default class RestaurantData extends ConnectToDatabase{
@@ -44,7 +44,7 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    restaurantByCnpj = async(cnpj:string):Promise<Restaurant>=>{
+    restaurantByCnpj = async(cnpj:string):Promise<RestaurantModel>=>{
         try{
 
             const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE).where({ cnpj })

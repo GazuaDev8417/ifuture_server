@@ -6,6 +6,18 @@ export interface UserModel{
     password:string
 }
 
+export interface RestaurantModel {
+    address:string,
+    category:string,
+    deliverytime:number,
+    description:string,
+    id:string,
+    logourl:string,
+    name:string,
+    shipping:number,
+    cnpj:string
+}
+
 export interface ProductModel{
     category:string
     description:string

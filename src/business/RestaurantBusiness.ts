@@ -39,7 +39,7 @@ export default class RestaurantBusiness{
         if(registeredRestaurant){
             throw{
                 statusCode: 403,
-                error: new Error('Restaurante já registrado')
+                error: new Error(`${registeredRestaurant.name} já está cadastradoS`)
             }
         }
 

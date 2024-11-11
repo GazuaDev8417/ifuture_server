@@ -13,12 +13,13 @@ export default class RestaurantBusiness{
         private restaurantData:RestaurantData
     ){}
     
-    signupRestaurant = async(req:Request):Promise<void>=>{
+    signupRestaurant = async(req:Request):Promise<string>=>{
         const { address , deliveryTime, description, logourl, shipping, cnpj } = req.body
         const cnpjAPI = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`
         const searchByCnpj = await  fetch(cnpjAPI)
         const data = await searchByCnpj.json()
         const id = new Services().idGenerator()
+        const token = new Services().token(id)
         const restaurant = new Restaurant(
             address, 
             data.atividade_principal[0].text, 
@@ -44,6 +45,8 @@ export default class RestaurantBusiness{
         }
 
         await this.restaurantData.signupRestaurant(restaurant)
+
+        return token
     }
 
 

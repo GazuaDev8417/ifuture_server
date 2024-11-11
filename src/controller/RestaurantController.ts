@@ -10,9 +10,9 @@ export default class RestaurantController{
     singupRestaurant = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            await this.restaurantBusiness.signupRestaurant(req)
+            const token = await this.restaurantBusiness.signupRestaurant(req)
 
-            res.status(201).send('Restaurante resgistrado com sucesso!')
+            res.status(201).send(token)
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

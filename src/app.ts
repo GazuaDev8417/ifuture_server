@@ -7,7 +7,12 @@ import * as SwaggerDocument from '../swagger.json'
 const PORT = process.env.PORT || 3003
 export const app = express()
 app.use(express.json())
-app.use(cors())
+const corsOptions = {
+    origin: 'https://ifuture-server.vercel.app',
+    methods: 'GET,POST,PUT,DELETE,PATCH,OPTIONS',
+    allowedHeaders: 'Authorization, Content-Type',
+}
+app.use(cors(corsOptions))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(SwaggerDocument))
 
 

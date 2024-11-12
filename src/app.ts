@@ -1,10 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
-import * as SwaggerDocument from '../swagger.json'
+import * as SwaggerDocument from './swagger.json'
 
-
-//console.log('Swagger document: ', SwaggerDocument)
 
 const PORT = process.env.PORT || 3003
 export const app = express()

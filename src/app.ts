@@ -32,3 +32,5 @@ try {
     console.error("Error loading Swagger file:", error);
 }
  */
+
+console.log(`Swagger document: ${JSON.stringify(SwaggerDocument)}`)

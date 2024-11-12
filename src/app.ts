@@ -25,7 +25,7 @@ app.listen(PORT, ()=>{
 })
 
 
-import fs from 'fs';
+/* import fs from 'fs';
 
 try {
     const fileContent = fs.readFileSync('swagger.json', 'utf-8');
@@ -33,4 +33,4 @@ try {
 } catch (error) {
     console.error("Error loading Swagger file:", error);
 }
-
+ */

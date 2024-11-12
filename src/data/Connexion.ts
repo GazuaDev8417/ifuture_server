@@ -16,7 +16,7 @@ export default abstract class ConnectToDatabase{
             await this.con.raw('SELECT 1+1 AS result')
             console.log('Conectado ao banco de dados')
         }catch(e){
-            console.log(`Erro ao conectar ao bando de dados ${e}`)
+            console.log(`Erro ao conectar ao banco de dados ${e}`)
         }
     }
 }

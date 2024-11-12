@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3003
 export const app = express()
 app.use(express.json())
 const corsOptions = {
-    origin: 'https://ifuture-server.vercel.app',
+    origin: '*',
     methods: 'GET,POST,PUT,DELETE,PATCH,OPTIONS',
     allowedHeaders: 'Authorization, Content-Type',
 }

@@ -1,15 +1,9 @@
 import express from 'express'
 import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
-//import * as SwaggerDocument from './swagger.json'
-import * as path from 'path';
-import fs from 'fs'
+import * as SwaggerDocument from './swagger.json'
 
-const swaggerDocument = JSON.parse(
-  fs.readFileSync(path.join(__dirname, './', 'swagger.json'), 'utf-8')
-)
 
-console.log(swaggerDocument)
 
 const PORT = process.env.PORT || 3003
 export const app = express()
@@ -20,7 +14,7 @@ const corsOptions = {
     allowedHeaders: 'Authorization, Content-Type',
 }
 app.use(cors(corsOptions))
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(SwaggerDocument))
 
 
 

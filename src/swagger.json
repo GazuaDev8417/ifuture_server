@@ -7,8 +7,12 @@
   },
   "servers": [
     {
-      "url": "https://ifuture-server.vercel.app/api-docs",
+      "url": "https://ifuture-server.vercel.app",
       "description": "Remote server"
+    },
+    {
+      "url": "http://localhost:3003",
+      "description": "Local server"
     }
   ],
   "paths": {

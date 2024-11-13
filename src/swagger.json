@@ -626,8 +626,8 @@
     },
     "/order/:id": {
       "patch": {
-        "summary": "Create Order",
-        "description": "Creates a new order",
+        "summary": "Changes order's quantity",
+        "description": "Updates order's quantity and consequently its total price",
         "parameters": [
           {
             "name": "Authorization",
@@ -750,7 +750,7 @@
       }
       },
       "delete": {
-        "summary": "Erase orders history",
+        "summary": "Erases orders history",
         "description": "Delete the whole user's orders history",
         "parameters": [
           {
@@ -864,7 +864,7 @@
     },
     "/requested_orders": {
       "delete": {
-        "summary": "Erase all the requested orders",
+        "summary": "Erases all the requested orders",
         "description": "Delete the whole user's requested orders",
         "parameters": [
           {

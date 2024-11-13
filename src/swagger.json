@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "iFuture API Documentation",
+    "title": "Ifuture API Documentation",
     "version": "1.0.0",
     "description": "API documentation for the iFuture project"
   },
@@ -355,6 +355,59 @@
         }
       }
     },
+    "/products": {
+      "post": {
+        "summary": "Insert Products",
+        "description": "Inserting products in restaurant's menu",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": { "type": "string", "example": "Category's product" },
+                  "description": { "type": "string", "example": "The description of the product" },
+                  "name": { "type": "string", "example": "The name of the product" },
+                  "photoUrl": { "type": "string", "example": "The url's image address of the product" },
+                  "price": { "type": "integer", "example": "The product's price" }
+                },
+                "required": [ "category", "description", "name", "photoUrl", "price" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Regists a new product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Product registered successfully!" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
     "/login_restaurant": {
       "post": {
         "summary": "Restaurant Login",
@@ -447,7 +500,7 @@
             "in": "header",
             "description": "Bearer token for authentication",
             "required": true,
-            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMxNTExODk3fQ.hfTmh7hfOSQ2SxJXlJoRQ7mA-f-TwUHOvo7HXqAaZPY" }
           }
         ],
         "responses": {
@@ -478,59 +531,48 @@
       }
     }
     },
-    "/products": {
-      "post": {
-        "summary": "Insert Products",
-        "description": "Inserting products in restaurant's menu",
+    "/restaurant_products/:id": {
+      "get": {
+        "summary": "Get Restaurants' menu",
+        "description": "Retrieves a list of restaurants' products",
         "parameters": [
           {
             "name": "Authorization",
             "in": "header",
             "description": "Bearer token for authentication",
             "required": true,
-            "schema": {
-              "type": "string",
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
-            }
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
           }
         ],
-        "requestBody": {
+        "responses": {
+          "200": {
+          "description": "Restaurants' menu",
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "category": { "type": "string", "example": "Category's product" },
-                  "description": { "type": "string", "example": "The description of the product" },
-                  "name": { "type": "string", "example": "The name of the product" },
-                  "photoUrl": { "type": "string", "example": "The url's image address of the product" },
-                  "price": { "type": "integer", "example": "The product's price" }
-                },
-                "required": [ "category", "description", "name", "photoUrl", "price" ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Regists a new product",
-            "content": {
-              "application/json": {
-                "schema": {
+                "type": "array",
+                "items": {
                   "type": "object",
                   "properties": {
-                    "message": { "type": "string", "example": "Product registered successfully!" }
+                    "category": { "type": "string", "example": "Product's category" },
+                    "description": { "type": "string", "example": "Product's description" },
+                    "id": { "type": "string", "example": "Product's id" },
+                    "name": { "type": "string", "example": "Product's name" },
+                    "photoUrl": { "type": "string", "example": "Product's image url" },
+                    "price": { "type": "integer", "example": "Product price" },
+                    "provider": { "type": "string", "example": "Provider restaurant's id" }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad request"
           }
-        }
+        },
+        "404": {
+            "description": "Not Found"
+          }
       }
-    },
+    }
+    }, 
     "/order": {
       "post": {
         "summary": "Create Order",
@@ -582,6 +624,87 @@
         }
       }
     },
+    "/order/:id": {
+      "patch": {
+        "summary": "Create Order",
+        "description": "Creates a new order",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "quantity": { "type": "integer", "example": "Quantity of product" }
+                  
+                },
+                "required": [ "quantity" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alter product's quantity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Product quantity altered successfully" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete order",
+        "description": "Removes the order of a logged-in user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns an updated array with the specific order removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Order removed successfully" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
     "/orders": {
       "get": {
         "summary": "Get all users' requested orders",
@@ -625,7 +748,41 @@
             "description": "NO"
           }
       }
-    }
+      },
+      "delete": {
+        "summary": "Erase orders history",
+        "description": "Delete the whole user's orders history",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Clean the list of finished orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Order history removed successfully" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     },
     "/active_orders": {
       "get": {
@@ -671,6 +828,75 @@
           }
       }
     }
+    },
+    "/finished_orders": {
+      "patch": {
+        "summary": "Completes orders",
+        "description": "Carries out the purchase of orders",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
+        "responses": {
+          "200": {
+          "description": "Finish orders",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": { "type": "string", "example": "Pedido finalizado" }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+            "description": "Bad request"
+          }
+      }
+    }
+    },
+    "/requested_orders": {
+      "delete": {
+        "summary": "Erase all the requested orders",
+        "description": "Delete the whole user's requested orders",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Clean the list of requested orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Requested orders removed successfully" }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     }
   }
 }

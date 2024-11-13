@@ -393,6 +393,91 @@
         }
       }
     },
+    "/restaurants": {
+      "get": {
+        "summary": "Get Restaurants",
+        "description": "Retrieves a list of all restaurants",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
+        "responses": {
+          "200": {
+          "description": "List of restaurants",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "address": { "type": "string", "example": "Nearest Address" },
+                    "category": { "type": "string", "example": "Fast Food" },
+                    "deliverytime": { "type": "integer", "example": "Delivery time" },
+                    "description": { "type": "string", "example": "Description of restaurant" },
+                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
+                    "logourl": { "type": "string", "example": "Restaurant's image url" },
+                    "name": { "type": "string", "example": "Restaurant's name" },
+                    "shipping": { "type": "integer", "example": "Shipping's price" },
+                    "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+            "description": "Bad request"
+          }
+      }
+    }
+    },
+    "/restaurants/:id": {
+      "get": {
+        "summary": "Get Restaurant by its id",
+        "description": "Retrieves a restaurant's details",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
+        "responses": {
+          "200": {
+          "description": "Restaurant's details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": { "type": "string", "example": "Nearest Address" },
+                  "category": { "type": "string", "example": "Fast Food" },
+                  "deliverytime": { "type": "integer", "example": "Delivery time" },
+                  "description": { "type": "string", "example": "Description of restaurant" },
+                  "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
+                  "logourl": { "type": "string", "example": "Restaurant's image url" },
+                  "name": { "type": "string", "example": "Restaurant's name" },
+                  "shipping": { "type": "integer", "example": "Shipping's price" },
+                  "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+            "description": "Bad request"
+          }
+      }
+    }
+    },
     "/products": {
       "post": {
         "summary": "Insert Products",
@@ -446,10 +531,61 @@
         }
       }
     },
-    "/restaurants": {
+    "/order": {
+      "post": {
+        "summary": "Create Order",
+        "description": "Creates a new order",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "product": { "type": "string", "example": "Product name" },
+                  "price": { "type": "integer", "example": "Product price" },
+                  "quantity": { "type": "integer", "example": "Product quantity" },
+                  "restaurant": { "type": "string", "example": "Product provider id" },
+                  "photoUrl": { "type": "string", "example": "Url's image of the product" }
+                  
+                },
+                "required": [ "product", "price", "quantity", "restaurant", "photoUrl" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Order registered successfully" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/orders": {
       "get": {
-        "summary": "Get Restaurants",
-        "description": "Retrieves a list of all restaurants",
+        "summary": "Get all users' requested orders",
+        "description": "Retrieves a list of requested orders by a logged-in user",
         "parameters": [
           {
             "name": "Authorization",
@@ -461,7 +597,7 @@
         ],
         "responses": {
           "200": {
-          "description": "List of restaurants",
+          "description": "List of orders",
           "content": {
             "application/json": {
               "schema": {
@@ -469,15 +605,61 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "address": { "type": "string", "example": "Nearest Address" },
-                    "category": { "type": "string", "example": "Fast Food" },
-                    "deliverytime": { "type": "integer", "example": "Delivery time" },
-                    "description": { "type": "string", "example": "Description of restaurant" },
                     "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
-                    "logourl": { "type": "string", "example": "Restaurant's image url" },
-                    "name": { "type": "string", "example": "Restaurant's name" },
-                    "shipping": { "type": "integer", "example": "Shipping's price" },
-                    "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" }
+                    "product": { "type": "string", "example": "Product name" },
+                    "price": { "type": "integer", "example": "Product price" },
+                    "photoUrl": { "type": "string", "example": "Product's image url" },
+                    "quantity": { "type": "integer", "example": "Quantity of product" },
+                    "total": { "type": "integer", "example": "The total price - qunantity * price" },
+                    "moment": { "type": "string", "example": "Time and date of the requested order" },
+                    "restaurant": { "type": "integer", "example": "The provider restaurant of the product" },
+                    "client": { "type": "string", "example": "the logged-in user's id" },
+                    "state": { "type": "string", "example": "State of order" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+            "description": "NO"
+          }
+      }
+    }
+    },
+    "/active_orders": {
+      "get": {
+        "summary": "Get all users' finished orders",
+        "description": "Retrieves a list of finished orders by a logged-in user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
+        "responses": {
+          "200": {
+          "description": "List of orders",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
+                    "product": { "type": "string", "example": "Product name" },
+                    "price": { "type": "integer", "example": "Product price" },
+                    "photoUrl": { "type": "string", "example": "Product's image url" },
+                    "quantity": { "type": "integer", "example": "Quantity of product" },
+                    "total": { "type": "integer", "example": "The total price - qunantity * price" },
+                    "moment": { "type": "string", "example": "Time and date of the requested order" },
+                    "restaurant": { "type": "integer", "example": "The provider restaurant of the product" },
+                    "client": { "type": "string", "example": "the logged-in user's id" },
+                    "state": { "type": "string", "example": "State of order" }
                   }
                 }
               }
@@ -489,43 +671,6 @@
           }
       }
     }
-    },
-    "/order": {
-      "post": {
-        "summary": "Create Order",
-        "description": "Creates a new order",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "restaurantId": { "type": "integer", "example": 1 },
-                  "items": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "productId": { "type": "integer", "example": 101 },
-                        "quantity": { "type": "integer", "example": 2 }
-                      }
-                    }
-                  }
-                },
-                "required": ["restaurantId", "items"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Order created successfully"
-          },
-          "400": {
-            "description": "Bad request"
-          }
-        }
-      }
     }
   }
 }

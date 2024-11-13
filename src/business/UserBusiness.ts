@@ -134,15 +134,14 @@ export default class UserBusiness{
     registAddress = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
         const { street, cep, number, neighbourhood, city, state, complement } = req.body
-       
+        const regex = /^\d{5}-\d{3}$/;
+        
         let finalStreet = street
         let finalNeighbourhood = neighbourhood
         let finalCity = city
         let finalState = state
 
-        if(!cep){
-            throw new Error('Digie ao menos o CEP do endereço')
-        }else if(cep.length !== 8){
+        if(!regex.test(cep)){
             throw new Error('CEP inválido!')
         }else{
             const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)

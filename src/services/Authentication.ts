@@ -74,7 +74,7 @@ export default class Services{
         if(!restaurant){
             throw{
                 statusCode: 404,
-                error: new Error('Usuário não encontrado')
+                error: new Error('Restaurante não encontrado')
             }
         }
     

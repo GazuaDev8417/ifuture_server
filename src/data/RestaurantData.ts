@@ -23,7 +23,10 @@ export default class RestaurantData extends ConnectToDatabase{
     getRestaurants = async():Promise<RestaurantModel[]>=>{
         try{
 
-            const restaurants = await ConnectToDatabase.con(this.RESTAURANT_TABLE)
+            const restaurants = await ConnectToDatabase.con(this.RESTAURANT_TABLE).select(
+                'address', 'category', 'deliverytime', 'description', 'id', 'logourl',
+                'name', 'shipping', 'cnpj'
+            )
 
             return restaurants
         }catch(e:any){

@@ -42,12 +42,28 @@ export default class UserData extends ConnectToDatabase{
         }
     }
 
+
+    getProfile = async(id:string):Promise<UserModel>=>{
+        try{
+
+            const [user] = await ConnectToDatabase.con(this.USER_TABLE)
+            .select('username', 'email', 'street', 'cep', 'number', 'neighbourhood', 'city', 'state', 'complement')
+            .where({ id })
+
+            return user
+        }catch(e:any){
+            throw new Error(`Erro ao buscar usuário: ${e}`)
+        }
+    }
+
     
     findByEmail = async(email:string):Promise<UserModel>=>{
         try{
 
-            const [user] = await ConnectToDatabase.con(this.USER_TABLE).where({ email })
-
+            const [user] = await ConnectToDatabase.con(this.USER_TABLE)
+            .select('password', 'id')
+            .where({ email })
+            
             return user
         }catch(e:any){
             throw new Error(`Erro ao buscar usuário: ${e}`)

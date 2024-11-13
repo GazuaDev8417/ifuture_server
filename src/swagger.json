@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "https://ifuture-server.vercel.app",
+      "url": "https://ifuture-server.vercel.app/api-docs",
       "description": "Remote server"
     },
     {
-      "url": "http://localhost:3003",
+      "url": "http://localhost:3003/api-docs",
       "description": "Local server"
     }
   ],
@@ -60,7 +60,7 @@
     "/login": {
       "post": {
         "summary": "User Login",
-        "description": "Logs in an existing user",
+        "description": "Logs in an existing user's account",
         "requestBody": {
           "content": {
             "application/json": {
@@ -119,11 +119,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
                     "username": { "type": "string", "example": "Visitante" },
                     "email": { "type": "string", "example": "visitante@email.com" },
-                    "cpf": { "type": "string", "example": "$2a$12$4kQXLiyiA4GolgcX0n8SEeRro1etRU/VfidMOmY95uHHqT0.0DCtG" },
-                    "password": { "type": "string", "example": "$2a$12$GbkOVOr0fNjUfswsqczm8.lK3tAGjEmkvSoe.SbUdhpeskeTr96KS" },
                     "street": { "type": "string", "example": "Rua Meyer" },
                     "cep": { "type": "string", "example": "86015160" },
                     "number": { "type": "string", "example": "" },
@@ -337,7 +334,7 @@
                   "password": { "type": "string", "example": "123456" },
                   "confirmPass": { "type": "string", "example": "123456" }
                 },
-                "required": ["category", "description", "name", "password"]
+                "required": ["category", "description", "name", "password", "cnpj"]
               }
             }
           }
@@ -351,6 +348,97 @@
                   "type": "object",
                   "properties": {
                     "message": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/login_restaurant": {
+      "post": {
+        "summary": "Restaurant Login",
+        "description": "Logs in an existing restaurant's account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" },
+                  "password": { "type": "string", "example": "123456" }
+                },
+                "required": ["password", "cnpj"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Restaurant logged in successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "summary": "Insert Products",
+        "description": "Inserting products in restaurant's menu",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": { "type": "string", "example": "Category's product" },
+                  "description": { "type": "string", "example": "The description of the product" },
+                  "name": { "type": "string", "example": "The name of the product" },
+                  "photoUrl": { "type": "string", "example": "The url's image address of the product" },
+                  "price": { "type": "integer", "example": "The product's price" }
+                },
+                "required": [ "category", "description", "name", "photoUrl", "price" ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Regists a new product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Product registered successfully!" }
                   }
                 }
               }
@@ -385,15 +473,24 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "id": { "type": "integer", "example": 1 },
-                    "name": { "type": "string", "example": "Restaurant A" },
-                    "address": { "type": "string", "example": "123 Main St" }
+                    "address": { "type": "string", "example": "Nearest Address" },
+                    "category": { "type": "string", "example": "Fast Food" },
+                    "deliverytime": { "type": "integer", "example": "Delivery time" },
+                    "description": { "type": "string", "example": "Description of restaurant" },
+                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
+                    "logourl": { "type": "string", "example": "Restaurant's image url" },
+                    "name": { "type": "string", "example": "Restaurant's name" },
+                    "shipping": { "type": "integer", "example": "Shipping's price" },
+                    "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" }
                   }
                 }
               }
             }
           }
-        }
+        },
+        "404": {
+            "description": "Not Found"
+          }
       }
     }
     },

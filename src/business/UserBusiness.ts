@@ -87,8 +87,9 @@ export default class UserBusiness{
     getProfile = async(req:Request):Promise<UserModel>=>{
         const user = await new Services().authToken(req)
         
+        const profile = await this.userData.getProfile(user.id)
 
-        return user
+        return profile
     }
 
 

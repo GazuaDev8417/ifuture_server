@@ -95,12 +95,17 @@ export default class UserBusiness{
 
     login = async(req:Request):Promise<string>=>{
         const { email, password } = req.body
+        const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
 
         if(!password || !email){
             throw{
                 statusCode: 401,
                 error: new Error('Preencha os campos')
             }
+        }
+
+        if(!regex.test(email)){
+            throw new Error('Email inválido!')
         }
 
         const registeredUser = await this.userData.findByEmail(email)

@@ -5,6 +5,24 @@
     "version": "1.0.0",
     "description": "API documentation for the iFuture project"
   },
+  "tags": [
+    {
+      "name": "User Management",
+      "description": "Operations related to user accounts"
+    },
+    {
+      "name": "User's Profile Address Management",
+      "description": "Operations for managing user's profile address"
+    },
+    {
+      "name": "Restaurant Management",
+      "description": "Operations related to restaurant accounts"
+    },
+    {
+      "name": "Order Management",
+      "description": "Operations related to the orders made by users to restaurants"
+    }
+  ],
   "servers": [
     {
       "url": "https://ifuture-server.vercel.app",
@@ -14,6 +32,7 @@
   "paths": {
     "/signup": {
       "post": {
+        "tags": ["User Management"],
         "summary": "User Signup",
         "description": "Registers a new user",
         "requestBody": {
@@ -55,6 +74,7 @@
     },
     "/login": {
       "post": {
+        "tags": ["User Management"],
         "summary": "User Login",
         "description": "Logs in an existing user's account",
         "requestBody": {
@@ -93,6 +113,7 @@
     },
     "/profile": {
       "get": {
+        "tags": ["User Management"],
         "summary": "Get Profile",
         "description": "Retrieves the profile of the logged-in user",
         "parameters": [
@@ -137,6 +158,7 @@
     },
     "/address": {
       "patch": {
+        "tags": ["User's Profile Address Management"],
         "summary": "Regists or updates Profile's address",
         "description": "Regists or updates the profile's address of the logged-in user",
         "parameters": [
@@ -189,6 +211,7 @@
         }
       },
       "get": {
+        "tags": ["User's Profile Address Management"],
         "summary": "Get Profile's address",
         "description": "Retrieves the profile's address of the logged-in user",
         "parameters": [
@@ -230,6 +253,7 @@
     },
     "/user": {
       "patch": {
+        "tags": ["User Management"],
         "summary": "Updates the user's profile",
         "description": "Updates the profile of the logged-in user",
         "parameters": [
@@ -277,6 +301,7 @@
         }
       },
       "delete": {
+        "tags": ["User Management"],
         "summary": "Delete user's account and all its orders",
         "description": "Removes the account of the logged-in user",
         "parameters": [
@@ -313,6 +338,7 @@
     },
     "/signup_restaurant": {
       "post": {
+        "tags": ["Restaurant Management"],
         "summary": "Restaurant Signup",
         "description": "Registers a new restaurant",
         "requestBody": {
@@ -357,6 +383,7 @@
     },
     "/products": {
       "post": {
+        "tags": ["Restaurant Management"],
         "summary": "Insert Products",
         "description": "Inserting products in restaurant's menu",
         "parameters": [
@@ -410,6 +437,7 @@
     },
     "/login_restaurant": {
       "post": {
+        "tags": ["Restaurant Management"],
         "summary": "Restaurant Login",
         "description": "Logs in an existing restaurant's account",
         "requestBody": {
@@ -448,6 +476,7 @@
     },
     "/restaurants": {
       "get": {
+        "tags": ["Restaurant Management"],
         "summary": "Get Restaurants",
         "description": "Retrieves a list of all restaurants",
         "parameters": [
@@ -492,6 +521,7 @@
     },
     "/restaurants/:id": {
       "get": {
+        "tags": ["Restaurant Management"],
         "summary": "Get Restaurant by its id",
         "description": "Retrieves a restaurant's details",
         "parameters": [
@@ -533,6 +563,7 @@
     },
     "/restaurant_products/:id": {
       "get": {
+        "tags": ["Restaurant Management"],
         "summary": "Get Restaurants' menu",
         "description": "Retrieves a list of restaurants' products",
         "parameters": [
@@ -575,6 +606,7 @@
     }, 
     "/order": {
       "post": {
+        "tags": ["Order Management"],
         "summary": "Create Order",
         "description": "Creates a new order",
         "parameters": [
@@ -626,6 +658,7 @@
     },
     "/order/:id": {
       "patch": {
+        "tags": ["Order Management"],
         "summary": "Changes order's quantity",
         "description": "Updates order's quantity and consequently its total price",
         "parameters": [
@@ -671,6 +704,7 @@
         }
       },
       "delete": {
+        "tags": ["Order Management"],
         "summary": "Delete order",
         "description": "Removes the order of a logged-in user",
         "parameters": [
@@ -707,6 +741,7 @@
     },
     "/orders": {
       "get": {
+        "tags": ["Order Management"],
         "summary": "Get all users' requested orders",
         "description": "Retrieves a list of requested orders by a logged-in user",
         "parameters": [
@@ -750,6 +785,7 @@
       }
       },
       "delete": {
+        "tags": ["Order Management"],
         "summary": "Erases orders history",
         "description": "Delete the whole user's orders history",
         "parameters": [
@@ -786,6 +822,7 @@
     },
     "/active_orders": {
       "get": {
+        "tags": ["Order Management"],
         "summary": "Get all users' finished orders",
         "description": "Retrieves a list of finished orders by a logged-in user",
         "parameters": [
@@ -831,6 +868,7 @@
     },
     "/finished_orders": {
       "patch": {
+        "tags": ["Order Management"],
         "summary": "Completes orders",
         "description": "Carries out the purchase of orders",
         "parameters": [
@@ -864,6 +902,7 @@
     },
     "/requested_orders": {
       "delete": {
+        "tags": ["Order Management"],
         "summary": "Erases all the requested orders",
         "description": "Delete the whole user's requested orders",
         "parameters": [

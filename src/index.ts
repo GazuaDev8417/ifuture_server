@@ -43,10 +43,12 @@ app.post('/products', restaurantController.insertProduct)
 app.get('/restaurants', restaurantController.getRestaurants)
 app.get('/restaurants/:id', restaurantController.restaurantById)
 app.get('/restaurant_products/:id', restaurantController.productsByRestaurant)
+app.get('/restaurant_orders', orderController.ordersByRestaurant)
+app.get('/active_restaurant_orders', orderController.activeRestaurantOrders)
 //ORDERS
 app.post('/order', orderController.todo_orders)
 
-app.get('/orders', orderController.ordersByClientAndRestaurant)
+app.get('/orders', orderController.ordersByClient)
 app.get('/active_orders', orderController.activeOrders)
 
 app.patch('/order/:id', orderController.updateOrder)

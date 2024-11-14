@@ -38,20 +38,29 @@ export default class OrderBusiness{
     }
 
 
-    ordersByClientAndRestaurant = async(req:Request):Promise<OrderModel[]>=>{
+    ordersByClient = async(req:Request):Promise<OrderModel[]>=>{
          const user = await new Services().authToken(req)
 
-         const orders = await this.orderData.ordersByClientAndRestaurant(user.id)
+         const orders = await this.orderData.ordersByClient(user.id)
         
          return orders
     }
+
+
+    ordersByRestaurant = async(req:Request):Promise<OrderModel[]>=>{
+        const restaurant = await new Services().authToken_restaurant(req)
+
+        const orders = await this.orderData.ordersByRestaurant(restaurant.id)
+       
+        return orders
+   }
 
 
     deleteOrder = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)
         
         await this.orderData.deleteOrder(req.params.id)
-        const orders = await this.orderData.ordersByClientAndRestaurant(user.id)
+        const orders = await this.orderData.ordersByClient(user.id)
 
         return orders
     }
@@ -92,6 +101,14 @@ export default class OrderBusiness{
     activeOrders = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)
         const orders = await this.orderData.activeOrders(user.id)
+
+        return orders
+    }
+
+
+    activeRestaurantOrders = async(req:Request):Promise<OrderModel[]>=>{
+        const restaurant = await new Services().authToken_restaurant(req)
+        const orders = await this.orderData.activeRestaurantOrders(restaurant.id)
 
         return orders
     }

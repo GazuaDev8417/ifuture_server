@@ -19,7 +19,7 @@ export default class RestaurantBusiness{
             throw new Error('CNPJ necessário para o cadastro!')
         }
         const cnpjAPI = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`
-        const searchByCnpj = await  fetch(cnpjAPI)
+        const searchByCnpj = await fetch(cnpjAPI)
         const data = await searchByCnpj.json()
         const id = new Services().idGenerator()
         const token = new Services().token(id)

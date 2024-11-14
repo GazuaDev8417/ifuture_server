@@ -3,7 +3,7 @@
   "info": {
     "title": "Ifuture API Documentation",
     "version": "1.0.0",
-    "description": "API documentation for the iFuture project"
+    "description": "API documentation for the Ifuture project"
   },
   "tags": [
     {
@@ -603,6 +603,98 @@
           }
       }
     }
+    },
+    "/restaurant_orders": {
+      "get": {
+        "tags": ["Restaurant Management"],
+        "summary": "Get restaurant's requested orders",
+        "description": "Retrieves a list of requested orders by a logged-in user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
+        "responses": {
+          "200": {
+          "description": "List of orders",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
+                    "product": { "type": "string", "example": "Product name" },
+                    "price": { "type": "integer", "example": "Product price" },
+                    "photoUrl": { "type": "string", "example": "Product's image url" },
+                    "quantity": { "type": "integer", "example": "Quantity of product" },
+                    "total": { "type": "integer", "example": "The total price - qunantity * price" },
+                    "moment": { "type": "string", "example": "Time and date of the requested order" },
+                    "restaurant": { "type": "integer", "example": "The provider restaurant of the product" },
+                    "client": { "type": "string", "example": "the logged-in user's id" },
+                    "state": { "type": "string", "example": "State of order" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+            "description": "Not Found"
+          }
+      }
+      }
+    },
+    "/active_restaurant_orders": {
+      "get": {
+        "tags": ["Restaurant Management"],
+        "summary": "Get restaurant's finished orders",
+        "description": "Retrieves a list of finished orders by a logged-in user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authentication",
+            "required": true,
+            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
+          }
+        ],
+        "responses": {
+          "200": {
+          "description": "List of orders",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
+                    "product": { "type": "string", "example": "Product name" },
+                    "price": { "type": "integer", "example": "Product price" },
+                    "photoUrl": { "type": "string", "example": "Product's image url" },
+                    "quantity": { "type": "integer", "example": "Quantity of product" },
+                    "total": { "type": "integer", "example": "The total price - qunantity * price" },
+                    "moment": { "type": "string", "example": "Time and date of the requested order" },
+                    "restaurant": { "type": "integer", "example": "The provider restaurant of the product" },
+                    "client": { "type": "string", "example": "the logged-in user's id" },
+                    "state": { "type": "string", "example": "State of order" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+            "description": "Not Found"
+          }
+      }
+      }
     }, 
     "/order": {
       "post": {
@@ -780,7 +872,7 @@
           }
         },
         "404": {
-            "description": "NO"
+            "description": "Not Found"
           }
       }
       },

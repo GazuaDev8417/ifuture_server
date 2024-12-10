@@ -93,6 +93,15 @@ export default class UserBusiness{
     }
 
 
+    userById = async(req:Request):Promise<UserModel>=>{
+        await new Services().authToken_restaurant(req)
+        
+        const user = await this.userData.getProfile(req.params.id)
+
+        return user
+    }
+
+
     login = async(req:Request):Promise<string>=>{
         const { email, password } = req.body
         const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
@@ -188,6 +197,13 @@ export default class UserBusiness{
                 error: new Error('Usuário sem endereço cadastrado')
             }
         }
+        
+        return address
+    }
+
+    addressByUser = async(userId:string):Promise<User>=>{
+
+        const address = await this.userData.checkAddress(userId)
         
         return address
     }

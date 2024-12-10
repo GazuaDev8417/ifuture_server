@@ -4,6 +4,13 @@ export interface UserModel{
     email:string
     cpf:string
     password:string
+    street:string,
+    cep:string
+    number:string 
+    neighbourhood:string,
+    city:string,
+    state:string,
+    complement:string
 }
 
 export interface RestaurantModel {

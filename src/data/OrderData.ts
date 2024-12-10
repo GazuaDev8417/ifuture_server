@@ -47,6 +47,17 @@ export default class OrderData extends ConnectToDatabase{
         }
     }
 
+    orderById = async(id:string):Promise<OrderModel>=>{
+        try{
+            
+            const [order] = await ConnectToDatabase.con(this.ORDER_TABLE).where({ id })
+            
+            return order
+        }catch(e:any){
+            throw new Error(`Erro ao buscar pedido: ${e}`)
+        }
+    }
+
 
     ordersByRestaurant = async(restaurant:string):Promise<OrderModel[]>=>{
         try{
@@ -74,6 +85,21 @@ export default class OrderData extends ConnectToDatabase{
             return activeOrders
         }catch(e:any){
             throw new Error(`Erro ao buscar pedido: ${e}`)
+        }
+    }
+
+
+    restaurantOrdersByClient = async(restaurant:string, client:string):Promise<OrderModel[]>=>{
+        try {
+
+            const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
+                restaurant,
+                client
+            })
+            console.log(orders)
+            return orders
+        } catch (e:any) {
+            throw new Error(`Erro ao buscar pedidos: ${e}`)
         }
     }
 

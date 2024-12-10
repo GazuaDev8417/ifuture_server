@@ -35,6 +35,19 @@ export default class OrderController{
     }
 
 
+    orderById = async(req:Request, res:Response):Promise<void>=>{
+        try{
+
+            const order = await this.orderBusiness.orderById(req)           
+
+            res.status(200).send(order)
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
     ordersByRestaurant = async(req:Request, res:Response):Promise<void>=>{
         try{
 
@@ -47,6 +60,21 @@ export default class OrderController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     }
+
+
+    restaurantOrdersByClient = async(req:Request, res:Response):Promise<void>=>{
+        try{
+
+            const orders = await this.orderBusiness.restaurantOrdersByClient(req)           
+
+            res.status(200).send(orders)
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
 
 
     deleteOrder = async(req:Request, res:Response):Promise<void>=>{

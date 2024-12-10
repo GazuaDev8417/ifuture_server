@@ -107,6 +107,13 @@ export default class RestaurantBusiness{
         return restaurant
     }
 
+
+    restaurantByToken = async(req:Request):Promise<RestaurantModel>=>{
+        const restaurant = await new Services().authToken_restaurant(req)
+
+        return restaurant
+    }
+
 //PRODUCTS 
     insertProduct = async(req:Request):Promise<void>=>{
         const restaurant = await new Services().authToken_restaurant(req)

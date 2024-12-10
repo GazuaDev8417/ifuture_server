@@ -30,6 +30,7 @@ app.post('/login', userController.login)
 
 app.get('/profile', userController.getProfile)
 app.get('/address', userController.checkAddress)
+app.get('/address/:id', userController.addressByUser)
 
 app.patch('/address', userController.registAddress)
 app.patch('/user', userController.updateUser)
@@ -42,13 +43,18 @@ app.post('/products', restaurantController.insertProduct)
 
 app.get('/restaurants', restaurantController.getRestaurants)
 app.get('/restaurants/:id', restaurantController.restaurantById)
+app.get('/restaurant', restaurantController.restaurantByToken)
 app.get('/restaurant_products/:id', restaurantController.productsByRestaurant)
 app.get('/restaurant_orders', orderController.ordersByRestaurant)
 app.get('/active_restaurant_orders', orderController.activeRestaurantOrders)
+app.get('/users_orders/:id', orderController.restaurantOrdersByClient)
+app.get('/user/:id', userController.userById)
 //ORDERS
 app.post('/order', orderController.todo_orders)
 
 app.get('/orders', orderController.ordersByClient)
+app.get('/order/:id', orderController.orderById)
+app.get('/order/:id', orderController.updateOrder)
 app.get('/active_orders', orderController.activeOrders)
 
 app.patch('/order/:id', orderController.updateOrder)

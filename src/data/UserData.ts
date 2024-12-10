@@ -47,7 +47,7 @@ export default class UserData extends ConnectToDatabase{
         try{
 
             const [user] = await ConnectToDatabase.con(this.USER_TABLE)
-            .select('username', 'email', 'street', 'cep', 'number', 'neighbourhood', 'city', 'state', 'complement')
+            .select('id', 'username', 'email', 'street', 'cep', 'number', 'neighbourhood', 'city', 'state', 'complement')
             .where({ id })
 
             return user

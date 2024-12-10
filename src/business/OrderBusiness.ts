@@ -14,7 +14,8 @@ export default class OrderBusiness{
 
     todo_orders = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
-        const { product, price, quantity, restaurant, photoUrl } = req.body
+        const address = `${user.street} ${user.number}, ${user.neighbourhood} ${user.city} - ${user.state}`
+        const { product, price, quantity, restaurant, photoUrl, description } = req.body
         const id = new Services().idGenerator()
         const order = new Orders(
             id, product, price, photoUrl, quantity,
@@ -22,7 +23,9 @@ export default class OrderBusiness{
             `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
             restaurant,
             user.id,
-            'REQUESTED'
+            'REQUESTED',
+            address,
+            description
         )
         
 
@@ -47,6 +50,14 @@ export default class OrderBusiness{
     }
 
 
+    orderById = async(req:Request):Promise<OrderModel>=>{
+        await new Services().authToken_restaurant(req)
+
+        const order = await this.orderData.orderById(req.params.id)
+       
+        return order
+   }
+
     ordersByRestaurant = async(req:Request):Promise<OrderModel[]>=>{
         const restaurant = await new Services().authToken_restaurant(req)
 
@@ -54,6 +65,14 @@ export default class OrderBusiness{
        
         return orders
    }
+
+   restaurantOrdersByClient = async(req:Request):Promise<OrderModel[]>=>{
+        const restaurant = await new Services().authToken_restaurant(req)
+        
+        const orders = await this.orderData.restaurantOrdersByClient(restaurant.id, req.params.id)
+    
+        return orders
+    }
 
 
     deleteOrder = async(req:Request):Promise<OrderModel[]>=>{

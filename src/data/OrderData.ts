@@ -96,7 +96,7 @@ export default class OrderData extends ConnectToDatabase{
                 restaurant,
                 client
             })
-            console.log(orders)
+            
             return orders
         } catch (e:any) {
             throw new Error(`Erro ao buscar pedidos: ${e}`)

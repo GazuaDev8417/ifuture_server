@@ -55,6 +55,7 @@ export default class RestaurantBusiness{
 
     loginRestaurant = async(req:Request):Promise<string>=>{
         const { cnpj, password } = req.body
+        const isUserValidation:boolean = req.body.isUserValidation
         
         if(!cnpj || !password){
             throw new Error('Insira suas crendencias para logar!')
@@ -74,7 +75,7 @@ export default class RestaurantBusiness{
         const token = new Services().token(registeredRestaurant.id)
 
         
-        return token
+        return isUserValidation ? registeredRestaurant.id : token
     }
 
 

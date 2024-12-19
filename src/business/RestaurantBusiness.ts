@@ -140,7 +140,22 @@ export default class RestaurantBusiness{
         await new Services().authToken(req)
 
         const products = await this.restaurantData.productsByProvider(req.params.id)
-        if(!products){
+        if(products.length === 0){
+            throw{
+                statusCode: 404,
+                error: new Error('Cardápio não encontrado')
+            }
+        }
+
+        return products
+    }
+
+
+    restaurantMenu = async(req:Request):Promise<ProductModel[]>=>{
+        const restaurant = await new Services().authToken_restaurant(req)
+
+        const products = await this.restaurantData.productsByProvider(restaurant.id)
+        if(products.length === 0){
             throw{
                 statusCode: 404,
                 error: new Error('Cardápio não encontrado')

@@ -50,6 +50,8 @@ app.get('/restaurant_orders', orderController.ordersByRestaurant)
 app.get('/active_restaurant_orders', orderController.activeRestaurantOrders)
 app.get('/users_orders/:id', orderController.restaurantOrdersByClient)
 app.get('/user/:id', userController.userById)
+
+app.delete('/product/:id', restaurantController.deleteProduct)
 //ORDERS
 app.post('/order', orderController.todo_orders)
 

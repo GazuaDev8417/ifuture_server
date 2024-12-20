@@ -164,6 +164,15 @@ export default class RestaurantBusiness{
 
         return products
     }
+
+
+    deleteProduct = async(req:Request):Promise<string>=>{
+        await new Services().authToken_restaurant(req)
+
+        const product = await this.restaurantData.deleteProduct(req.params.id)
+
+        return product
+    }
 }
 
 

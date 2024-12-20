@@ -94,4 +94,24 @@ export default class RestaurantData extends ConnectToDatabase{
             throw new Error(`Erro ao buscar cardápio: ${e}`)
         }
     }
+
+
+    deleteProduct = async(id:string):Promise<string>=>{
+        try{
+
+            const product:ProductModel = await ConnectToDatabase.con(this.PRODUCT_TABLE)
+            .where({ id })
+            .first()
+
+            if(!product){
+                throw new Error('Produto não encontrado')
+            }
+
+            await ConnectToDatabase.con(this.PRODUCT_TABLE).where({ id }).del()
+
+            return product.name
+        }catch(e:any){
+            throw new Error(`Erro ao excluir produto: ${e}`)
+        }
+    }
 }

@@ -17,10 +17,11 @@ export default class OrderBusiness{
         const address = `${user.street} ${user.number}, ${user.neighbourhood} ${user.city} - ${user.state}`
         const { product, price, quantity, restaurant, photoUrl, description } = req.body
         const id = new Services().idGenerator()
+        const invertDate = new Services().invertDate(new Date().toLocaleDateString())
         const order = new Orders(
             id, product, price, photoUrl, quantity,
             quantity * price,
-            `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
+            `${invertDate} - ${new Date().toLocaleTimeString()}`,
             restaurant,
             user.id,
             'REQUESTED',

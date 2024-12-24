@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import UserData from '../data/UserData'
 import RestaurantData from '../data/RestaurantData'
+import moment from 'moment-timezone'
 import { RestaurantModel, UserModel } from '../model/typesAndInterfaces'
 import { config } from 'dotenv'
 
@@ -81,6 +82,27 @@ export default class Services{
     
         return restaurant
     }
+
+    invertDate = (date:string)=>{
+        //if (!date) return null
+
+        // Try parsing the date assuming it's in 'DD/MM/YYYY' format
+        const ddmmYYYYDate = moment(date, 'DD/MM/YYYY', true)
+
+        // If parsing succeeds, return the date directly
+        if (ddmmYYYYDate.isValid()) return date
+        
+        const washingtonTimezone = 'America/New_York'
+        const brazilTimezone = 'America/Bahia'
+
+        // Convert the date from 'M/D/YYYY' format to Brazil timezone
+        const brazilDate = moment.tz(date, 'M/D/YYYY', washingtonTimezone).tz(brazilTimezone)
+        
+        const formattedBrazilDate = brazilDate && brazilDate.format('DD/MM/YYYY') //: null
+        
+        return formattedBrazilDate           
+    }
+
 
     
 }

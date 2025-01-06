@@ -14,13 +14,20 @@ export default class RestaurantBusiness{
     ){}
     
     signupRestaurant = async(req:Request):Promise<string>=>{
-        const { address , description, logourl, cnpj, password } = req.body
+        const { name, address , description, logourl, cnpj, password } = req.body
+
         if(!cnpj){
             throw new Error('CNPJ necessário para o cadastro!')
         }
+
         const cnpjAPI = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`
         const searchByCnpj = await fetch(cnpjAPI)
         const data = await searchByCnpj.json()
+        
+        if(data.message && data.message === 'CNPJ inválido'){
+            throw new Error(data.message)
+        }
+        
         const id = new Services().idGenerator()
         const token = new Services().token(id)
         const restaurant = new Restaurant(
@@ -29,12 +36,12 @@ export default class RestaurantBusiness{
             description, 
             id, 
             logourl, 
-            data.fantasia,
+            data.fantasia === '' ? name : data.fantasia,
             cnpj,
             password
         )
-        
-
+          
+                
         if(data.situacao !== 'ATIVA'){
             throw new Error('A empresa não está mais ativa')
         }
@@ -43,7 +50,7 @@ export default class RestaurantBusiness{
         if(registeredRestaurant){
             throw{
                 statusCode: 403,
-                error: new Error(`${registeredRestaurant.name} já está cadastradoS`)
+                error: new Error(`${registeredRestaurant.name} já está cadastrado(a)`)
             }
         }
 

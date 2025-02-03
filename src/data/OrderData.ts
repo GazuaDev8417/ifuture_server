@@ -136,10 +136,9 @@ export default class OrderData extends ConnectToDatabase{
         try{
             
             const [order] = await ConnectToDatabase.con(this.ORDER_TABLE).where({ id })
-            
             await ConnectToDatabase.con(this.ORDER_TABLE).update({
-                quantity,
-                total: quantity * order.price
+              quantity,
+              total: quantity * order.price
             }).where({ id })
 
         }catch(e:any){

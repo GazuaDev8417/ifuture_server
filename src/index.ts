@@ -26,12 +26,10 @@ const orderController = new OrderController(
 
 app.post('/signup', userController.signup)
 app.post('/login', userController.login)
-//app.post('/cpf', userController.bringCPF)
 
 app.get('/profile', userController.getProfile)
 app.get('/address', userController.checkAddress)
 app.get('/address/:id', userController.addressByUser)
-app.get('/restaurant_products/:id', restaurantController.productsByRestaurant)
 
 app.patch('/address', userController.registAddress)
 app.patch('/user', userController.updateUser)
@@ -42,6 +40,7 @@ app.post('/signup_restaurant', restaurantController.singupRestaurant)
 app.post('/login_restaurant', restaurantController.loginRestaurant)
 app.post('/products', restaurantController.insertProduct)
 
+app.get('/restaurant_products/:id', restaurantController.productsByRestaurant)
 app.get('/restaurants', restaurantController.getRestaurants)
 app.get('/restaurants/:id', restaurantController.restaurantById)
 app.get('/restaurant', restaurantController.restaurantByToken)

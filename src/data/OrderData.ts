@@ -160,7 +160,6 @@ export default class OrderData extends ConnectToDatabase{
             }
 
             await ConnectToDatabase.con(this.ORDER_TABLE).update({
-                moment: `${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`,
                 state: 'FINISHED'
             }).where({ client: id })
 

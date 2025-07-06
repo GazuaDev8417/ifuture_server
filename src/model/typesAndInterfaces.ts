@@ -2,7 +2,7 @@ export interface UserModel{
     id:string
     username:string
     email:string
-    cpf:string
+    phone:string
     password:string
     street:string,
     cep:string

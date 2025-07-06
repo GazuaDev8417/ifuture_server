@@ -47,7 +47,7 @@ export default class UserData extends ConnectToDatabase{
         try{
 
             const [user] = await ConnectToDatabase.con(this.USER_TABLE)
-            .select('id', 'username', 'email', 'street', 'cep', 'number', 'neighbourhood', 'city', 'state', 'complement')
+            .select('id', 'username', 'email', 'street', 'cep', 'number', 'neighbourhood', 'city', 'state', 'complement', 'phone')
             .where({ id })
 
             return user
@@ -99,11 +99,11 @@ export default class UserData extends ConnectToDatabase{
     }
 
 
-    updateUser = async(username:string, email:string, id:string):Promise<void>=>{
+    updateUser = async(username:string, email:string, phone:string, id:string):Promise<void>=>{
         try{
 
             await ConnectToDatabase.con(this.USER_TABLE).update({
-                username, email
+                username, email, phone
             }).where({ id })
             
         }catch(e:any){

@@ -104,7 +104,10 @@ export default class OrderBusiness{
         const { quantity } = req.body
 
         if(!quantity){
-            throw new Error('Insira a quantidade do produto')
+            throw{
+                statusCode: 401,
+                error: new Error('Insira uma quantidade para o produto')
+            }
         }
 
         await this.orderData.updateOrder(quantity, req.params.id)

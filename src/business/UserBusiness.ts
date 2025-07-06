@@ -12,32 +12,30 @@ export default class UserBusiness{
     ){}
 //USER FIELD
     signup = async(req:Request):Promise<string>=>{
-        const { name, email, cpf, password, confirmPass } = req.body
-        const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
+        const { name, email, phone, password } = req.body
+        const regexEmail = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
+        const regexPhone = /^(\d{2})9\d{8}$/;
 
 
-        if(!name || !email || !cpf || !password || !confirmPass){
+        if(!name || !email || !phone || !password){
             throw{
                 statusCode: 401,
                 error: new Error('Preencha os campos')
             }
         }
 
-        if(!regex.test(email)){
-            throw new Error('Email inválido!')
+        if(!regexEmail.test(email)){
+            throw{
+                statusCode: 403,
+                error: new Error('Email inválido!')
+            }
         }
 
-
-        const allUsers = await this.userData.getAllUsers()
-        if(allUsers.length > 0){
-            allUsers.map(user=>{
-                if(new Services().compare(cpf, user.cpf)){
-                    throw{
-                        statusCode: 403,
-                        error: new Error('Usuário já cadastrado')
-                    }
-                }
-            })
+        if(!regexPhone.test(phone)){
+            throw{
+                statusCode: 403,
+                error: new Error('Telefone inválido!')
+            }
         }
 
         const registeredUser = await this.userData.findByEmail(email)
@@ -48,13 +46,6 @@ export default class UserBusiness{
             }
         
         }
-        
-        if(cpf.length !== 11){
-            throw{
-                statusCode: 401,
-                error: new Error('CPF inválido')
-            }
-        }
 
         if(password.length < 6){
             throw{
@@ -63,19 +54,11 @@ export default class UserBusiness{
             }
         }
 
-        if(password !== confirmPass){
-            throw{
-                stausCode: 403,
-                error: new Error('As senhas não conferem')
-            }
-        }
-
         const id = new Services().idGenerator()
         const hash = new Services().hash(password)
-        const hashCPF = new Services().hash(cpf)
         const token = new Services().token(id)
 
-        const user = new User(id, name, email, hashCPF, hash)
+        const user = new User(id, name, email, phone, hash)
 
         await this.userData.create(user)
 
@@ -114,7 +97,10 @@ export default class UserBusiness{
         }
 
         if(!regex.test(email)){
-            throw new Error('Email inválido!')
+            throw{
+                statusCode: 403,
+                error: new Error('Email inválido!')
+            }
         }
 
         const registeredUser = await this.userData.findByEmail(email)
@@ -151,7 +137,10 @@ export default class UserBusiness{
         let finalState = state
 
         if(!regex.test(cep)){
-            throw new Error('CEP inválido!')
+            throw{
+                statusCode: 403,
+                error: new Error('Cep inválido!')
+            }
         }else{
             const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
             const data:cepModel = await res.json()
@@ -170,18 +159,24 @@ export default class UserBusiness{
 
     updateUser = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
-        const { username, email } = req.body
+        const { username, email, phone } = req.body
         const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
 
         if(!username || !email ){
-            throw new Error('Preencha os campos')
+            throw{
+                statusCode: 403,
+                error: new Error('Preencha os campos')
+            }
         }
 
         if(!regex.test(email)){
-            throw new Error('Email inválido!')
+            throw{
+                statusCode: 403,
+                error: new Error('Email inválido!')
+            }
         }
 
-        await this.userData.updateUser(username, email, user.id)
+        await this.userData.updateUser(username, email, phone, user.id)
     }
 
 

@@ -17,7 +17,10 @@ export default class RestaurantBusiness{
         const { name, address , description, logourl, cnpj, password } = req.body
 
         if(!cnpj){
-            throw new Error('CNPJ necessário para o cadastro!')
+            throw{
+                statusCode: 401,
+                error: new Error('CNPJ necessário para o cadastro')
+            }
         }
 
         const cnpjAPI = `https://www.receitaws.com.br/v1/cnpj/${cnpj}`
@@ -25,7 +28,10 @@ export default class RestaurantBusiness{
         const data = await searchByCnpj.json()
         
         if(data.message && data.message === 'CNPJ inválido'){
-            throw new Error(data.message)
+            throw{
+                statusCode: 401,
+                error: new Error(data.message)
+            }
         }
         
         const id = new Services().idGenerator()
@@ -43,7 +49,10 @@ export default class RestaurantBusiness{
           
                 
         if(data.situacao !== 'ATIVA'){
-            throw new Error('A empresa não está mais ativa')
+            throw{
+                statusCode: 403,
+                error: new Error('A empresa já não está mais ativa')
+            }
         }
 
         const registeredRestaurant = await this.restaurantData.restaurantByCnpj(cnpj)
@@ -65,18 +74,27 @@ export default class RestaurantBusiness{
         const isUserValidation:boolean = req.body.isUserValidation
         
         if(!cnpj || !password){
-            throw new Error('Insira suas crendencias para logar!')
+            throw{
+                statusCode: 401,
+                error: new Error('Insira as credenciais para logar(CNPJ e senha)')
+            }
         }
 
         
         const registeredRestaurant = await this.restaurantData.restaurantByCnpj(cnpj)
         if(!registeredRestaurant){
-            throw new Error('Registro não encontrado!')
+            throw{
+                statusCode: 404,
+                error: new Error('Registro não encontrado')
+            }
         }
 
         const compare = new Services().compare(password, registeredRestaurant.password)
         if(!compare){
-            throw new Error('Registro não encontrado!')
+            throw{
+                statusCode: 404,
+                error: new Error('Registro não encontrado')
+            }
         }
 
         const token = new Services().token(registeredRestaurant.id)

@@ -35,7 +35,7 @@ export default class Timezone{
         const extractedTime = currentMoment.split('às')[1].trim()
         const timeParts = extractedTime.split(':')
         const hours = parseInt(timeParts[0])
-        const morning = timeParts[2].indexOf('A') !== -1
+        const morning = timeParts[2]?.indexOf('A') !== -1
         const now = new Date(extractedDate)
         now.setDate(now.getDate() - 1)
         const yesterday = now.toLocaleDateString()

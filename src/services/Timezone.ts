@@ -36,12 +36,13 @@ export default class Timezone{
         const timeParts = extractedTime.split(':')
         const hours = parseInt(timeParts[0])
         const morning = timeParts[2]?.indexOf('A') !== -1
-        const now = new Date(extractedDate)
-        now.setDate(now.getDate() - 1)
-        const yesterday = now.toLocaleDateString()
-        const currentDate = morning && hours >= 3 ? yesterday : new Date(extractedDate).toLocaleDateString()
-        const currentLocalDate = this.invertDate(currentDate)
-        
+        const now = new Date(extractedDate)  
+        if(morning && hours >= 3){
+            now.setDate(now.getDate() - 1)
+        }
+
+        const currentLocalDate = this.invertDate(now.toLocaleDateString('pt-br'))
+
         return currentLocalDate
     }
 }

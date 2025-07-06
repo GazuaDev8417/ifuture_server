@@ -34,6 +34,7 @@ export default class Timezone{
         const extractedDate = currentMoment.split('às')[0].trim()
         const extractedTime = currentMoment.split('às')[1].trim()
         const timeParts = extractedTime.split(':')
+        console.log(timeParts)
         const hours = parseInt(timeParts[0])
         const morning = timeParts[2]?.indexOf('A') !== -1
         const now = new Date(extractedDate)  

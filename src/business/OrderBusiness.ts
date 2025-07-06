@@ -22,7 +22,8 @@ export default class OrderBusiness{
         const order = new Orders(
             id, product, price, photoUrl, quantity,
             quantity * price,
-            timezone.returnToLocalDate(moment),            
+            // timezone.returnToLocalDate(moment),
+            moment,            
             restaurant,
             user.id,
             'REQUESTED',

@@ -15,13 +15,12 @@ export default class OrderBusiness{
     todo_orders = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
         const address = `${user.street} ${user.number}, ${user.neighbourhood} ${user.city} - ${user.state}`
-        const { product, price, quantity, restaurant, photoUrl, description } = req.body
+        const { product, price, quantity, moment, restaurant, photoUrl, description } = req.body
         const id = new Services().idGenerator()
-        const invertDate = new Services().invertDate(new Date().toLocaleDateString())
         const order = new Orders(
             id, product, price, photoUrl, quantity,
             quantity * price,
-            `${invertDate} - ${new Date().toLocaleTimeString()}`,
+            moment,
             restaurant,
             user.id,
             'REQUESTED',

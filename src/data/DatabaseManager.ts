@@ -103,6 +103,8 @@ export default class DatabaseManager extends ConnectToDatabase{
                     table.string('restaurant', 255).notNullable()
                     table.string('client', 255).notNullable()
                     table.string('state', 50).notNullable()
+                    table.string('address', 255).notNullable()
+                    table.text('description').notNullable()
                 })
 
                 console.log(`Tabela ${this.ORDER_TABLE} criada com sucesso`)

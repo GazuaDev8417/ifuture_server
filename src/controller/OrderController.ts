@@ -12,7 +12,7 @@ export default class OrderController{
 
             await this.orderBusiness.todo_orders(req)
 
-            res.status(200).send(`${req.body.product} adicionado aos pedidos`)
+            res.status(200).send(`${req.body.product} adicionado aos pedidos. Gostaria de verificar?`)
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

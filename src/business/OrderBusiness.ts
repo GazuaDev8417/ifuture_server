@@ -2,6 +2,7 @@ import { Request } from "express"
 import Orders from "../model/Order"
 import OrderData from "../data/OrderData"
 import Services from "../services/Authentication"
+import Timezone from "../services/Timezone"
 import { OrderModel } from "../model/typesAndInterfaces"
 
 
@@ -14,13 +15,14 @@ export default class OrderBusiness{
 
     todo_orders = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
+        const timezone = new Timezone()
         const address = `${user.street} ${user.number}, ${user.neighbourhood} ${user.city} - ${user.state}`
         const { product, price, quantity, moment, restaurant, photoUrl, description } = req.body
         const id = new Services().idGenerator()
         const order = new Orders(
             id, product, price, photoUrl, quantity,
             quantity * price,
-            moment,
+            timezone.returnToLocalDate(moment),            
             restaurant,
             user.id,
             'REQUESTED',

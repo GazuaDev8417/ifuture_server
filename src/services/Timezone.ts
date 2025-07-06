@@ -31,8 +31,16 @@ export default class Timezone{
 
 
     returnToLocalDate = (currentMoment:string)=>{
-        const extractedDate = currentMoment.split('-')[0]
-        const currentLocalDate = this.invertDate(extractedDate)
+        const extractedDate = currentMoment.split('às')[0].trim()
+        const extractedTime = currentMoment.split('às')[1].trim()
+        const timeParts = extractedTime.split(':')
+        const hours = parseInt(timeParts[0])
+        const morning = timeParts[2].indexOf('A') !== -1
+        const now = new Date(extractedDate)
+        now.setDate(now.getDate() - 1)
+        const yesterday = now.toLocaleDateString()
+        const currentDate = morning && hours >= 3 ? yesterday : new Date(extractedDate).toLocaleDateString()
+        const currentLocalDate = this.invertDate(currentDate)
         
         return currentLocalDate
     }

@@ -117,8 +117,9 @@ export default class OrderBusiness{
 
     endOrders = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
+        const { paymentMethod } = req.body
         
-        await this.orderData.endDorders(user.id)
+        await this.orderData.endDorders(user.id, paymentMethod)
     }
 
     

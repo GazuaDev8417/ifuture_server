@@ -108,10 +108,9 @@ export default class OrderData extends ConnectToDatabase{
     activeOrders = async(client:string):Promise<OrderModel[]>=>{
         try{
             
-            const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                client,
-                state: 'FINISHED'
-            })
+            const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE)
+                .where({ client, state: 'FINISHED' })
+                .orderByRaw(`to_timestamp(regexp_replace(moment, ' às ', ' ', 'g'), 'DD/MM/YYYY HH24:MI') DESC`)
 
             return activeOrders
         }catch(e:any){
@@ -147,7 +146,7 @@ export default class OrderData extends ConnectToDatabase{
     }
 
 
-    endDorders = async(id:string):Promise<void>=>{
+    endDorders = async(id:string, paymentMethod:string):Promise<void>=>{
         try{
 
             const orders:OrderModel[] = await ConnectToDatabase.con(this.ORDER_TABLE).where({
@@ -160,7 +159,8 @@ export default class OrderData extends ConnectToDatabase{
             }
 
             await ConnectToDatabase.con(this.ORDER_TABLE).update({
-                state: 'FINISHED'
+                state: 'FINISHED',
+                paymentmethod: paymentMethod
             }).where({ client: id })
 
         }catch(e:any){

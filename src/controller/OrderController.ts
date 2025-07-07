@@ -137,7 +137,7 @@ export default class OrderController{
             
             await this.orderBusiness.endOrders(req)
             
-            res.status(200).send('Pedido finalizado')
+            res.status(200).send('Pedido finalizado. Você pode acessar o histórico de seus pedidos clicando no ícone do pérfil na margem superior direita')
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

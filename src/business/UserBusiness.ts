@@ -162,7 +162,7 @@ export default class UserBusiness{
         const { username, email, phone } = req.body
         const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
 
-        if(!username || !email ){
+        if(!username || !email || !phone){
             throw{
                 statusCode: 403,
                 error: new Error('Preencha os campos')

@@ -80,10 +80,11 @@ export default class OrderBusiness{
 
 
     deleteOrder = async(req:Request):Promise<OrderModel[]>=>{
-        const user = await new Services().authToken(req)
+        const token = req.headers.authorization
+        const userId = new Services().tokenData(token as string).payload
         
         await this.orderData.deleteOrder(req.params.id)
-        const orders = await this.orderData.ordersByClient(user.id)
+        const orders = await this.orderData.ordersByClient(userId)
 
         return orders
     }

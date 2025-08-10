@@ -105,7 +105,7 @@ export default class RestaurantBusiness{
 
 
     getRestaurants = async(req:Request):Promise<RestaurantModel[]>=>{
-        await new Services().authToken(req)
+        //await new Services().authToken(req)
 
         const restaurants = await this.restaurantData.getRestaurants()
         if(restaurants.length === 0){
@@ -120,8 +120,6 @@ export default class RestaurantBusiness{
 
 
     restaurantById = async(req:Request):Promise<RestaurantModel>=>{
-        await new Services().authToken(req)
-
         const restaurant = await this.restaurantData.restaurantById(req.params.id)
         if(!restaurant){
             throw{
@@ -162,8 +160,6 @@ export default class RestaurantBusiness{
 
 
     productsByRestaurant = async(req:Request):Promise<ProductModel[]>=>{
-        await new Services().authToken(req)
-
         const products = await this.restaurantData.productsByProvider(req.params.id)
         if(products.length === 0){
             throw{

@@ -16,7 +16,7 @@ export default class Orders extends ConnectToDatabase{
         private restaurant:string ,
         private client:string,
         private state:string,
-        private address:string,
+        //private address:string,
         private description:string
     ){ super() }
 
@@ -33,7 +33,7 @@ export default class Orders extends ConnectToDatabase{
                 restaurant: this.restaurant,
                 client: this.client,
                 state: this.state,
-                address: this.address,
+                //address: this.address,
                 description: this.description
             })
         }catch(e){

@@ -4,7 +4,6 @@ import * as jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import UserData from '../data/UserData'
 import RestaurantData from '../data/RestaurantData'
-import moment from 'moment-timezone'
 import { RestaurantModel, UserModel } from '../model/typesAndInterfaces'
 import { config } from 'dotenv'
 

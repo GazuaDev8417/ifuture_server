@@ -14,8 +14,9 @@ export default class OrderBusiness{
     ){}
 
     todo_orders = async(req:Request):Promise<void>=>{
-        const user = await new Services().authToken(req)
-        const address = `${user.street} ${user.number}, ${user.neighbourhood} ${user.city} - ${user.state}`
+        const token = req.headers.authorization
+        const userId = new Services().tokenData(token as string).payload
+        //const address = `${user.street} ${user.number}, ${user.neighbourhood} ${user.city} - ${user.state}`
         const { product, price, quantity, momentString, restaurant, photoUrl, description } = req.body
         const localMoment = moment.utc(momentString).tz("America/Sao_Paulo").format('DD/MM/YYYY [às] HH:mm')
         const id = new Services().idGenerator()
@@ -24,14 +25,14 @@ export default class OrderBusiness{
             quantity * price,
             localMoment,            
             restaurant,
-            user.id,
+            userId,
             'REQUESTED',
-            address,
+            //address,
             description
         )
         
 
-        const registeredOrders = await this.orderData.findOrderByRequest(product, restaurant, user.id)
+        const registeredOrders = await this.orderData.findOrderByRequest(product, restaurant, userId)
         if(registeredOrders){
             throw{
                 statusCode: 403,
@@ -136,5 +137,13 @@ export default class OrderBusiness{
         const orders = await this.orderData.activeRestaurantOrders(restaurant.id)
 
         return orders
+    }
+
+    registAddressOrder = async(req:Request):Promise<void>=>{
+        const { address } = req.body
+        const token = req.headers.authorization
+        const userId = new Services().tokenData(token as string).payload
+
+        await this.orderData.registAddressOrder(address, userId)
     }
 }

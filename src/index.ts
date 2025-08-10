@@ -24,14 +24,13 @@ const orderController = new OrderController(
 )
 
 
-app.post('/signup', userController.signup)
+//app.post('/signup', userController.signup)
 app.post('/login', userController.login)
 
-app.get('/profile', userController.getProfile)
+//app.get('/profile', userController.getProfile)
 app.get('/address', userController.checkAddress)
 app.get('/address/:id', userController.addressByUser)
 
-app.patch('/address', userController.registAddress)
 app.patch('/user', userController.updateUser)
 
 app.delete('/user', userController.deleteUser)
@@ -48,7 +47,7 @@ app.get('/restaurant_menu', restaurantController.restaurantMenu)
 app.get('/restaurant_orders', orderController.ordersByRestaurant)
 app.get('/active_restaurant_orders', orderController.activeRestaurantOrders)
 app.get('/users_orders/:id', orderController.restaurantOrdersByClient)
-app.get('/user/:id', userController.userById)
+//app.get('/user/:id', userController.userById)
 
 app.delete('/product/:id', restaurantController.deleteProduct)
 //ORDERS
@@ -61,6 +60,7 @@ app.get('/active_orders', orderController.activeOrders)
 
 app.patch('/order/:id', orderController.updateOrder)
 app.patch('/finished_orders', orderController.endOrders)
+app.patch('/address', orderController.registAddressOrder)
 
 app.delete('/order/:id', orderController.deleteOrder)
 app.delete('/orders', orderController.cleanOrdersHistory)

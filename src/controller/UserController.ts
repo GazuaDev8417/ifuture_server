@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import UserBusiness from "../business/UserBusiness"
 import User from "../model/User"
+import Services from "../services/Authentication"
 
 
 
@@ -9,7 +10,7 @@ export default class UserController{
         private userBusiness:UserBusiness
     ){}
 
-    signup = async(req:Request, res:Response):Promise<void>=>{
+    /* signup = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const token = await this.userBusiness.signup(req)
@@ -20,10 +21,10 @@ export default class UserController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
-    getProfile = async(req:Request, res:Response):Promise<void>=>{
+    /* getProfile = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const user = await this.userBusiness.getProfile(req)
@@ -34,10 +35,10 @@ export default class UserController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
-    userById = async(req:Request, res:Response):Promise<void>=>{
+    /* userById = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const user = await this.userBusiness.userById(req)
@@ -48,7 +49,7 @@ export default class UserController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
     /* bringCPF = async(req:Request, res:Response):Promise<void>=>{
@@ -68,9 +69,10 @@ export default class UserController{
     login = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            const authentication = await this.userBusiness.login(req)
+            const userId = crypto.randomUUID()
+            const token = new Services().token(userId)
 
-            res.status(200).send(authentication)
+            res.status(200).send(token)
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

@@ -2,7 +2,7 @@ import { Request } from "express"
 import UserData from "../data/UserData"
 import Services from "../services/Authentication"
 import User from "../model/User"
-import { cepModel, UserModel } from "../model/typesAndInterfaces"
+import { cepModel } from "../model/typesAndInterfaces"
 
 
 
@@ -11,7 +11,7 @@ export default class UserBusiness{
         private userData:UserData
     ){}
 //USER FIELD
-    signup = async(req:Request):Promise<string>=>{
+   /*  signup = async(req:Request):Promise<string>=>{
         const { name, email, phone, password } = req.body
         const regexEmail = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
         const regexPhone = /^(\d{2})9\d{8}$/;
@@ -64,28 +64,28 @@ export default class UserBusiness{
 
         return token
 
-    }
+    } */
 
 
-    getProfile = async(req:Request):Promise<UserModel>=>{
+    /* getProfile = async(req:Request):Promise<UserModel>=>{
         const user = await new Services().authToken(req)
         
         const profile = await this.userData.getProfile(user.id)
 
         return profile
-    }
+    } */
 
 
-    userById = async(req:Request):Promise<UserModel>=>{
+    /* userById = async(req:Request):Promise<UserModel>=>{
         await new Services().authToken_restaurant(req)
         
         const user = await this.userData.getProfile(req.params.id)
 
         return user
-    }
+    } */
 
 
-    login = async(req:Request):Promise<string>=>{
+    /* login = async(req:Request):Promise<string>=>{
         const { email, password } = req.body
         const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
 
@@ -123,7 +123,7 @@ export default class UserBusiness{
         const token = new Services().token(registeredUser.id)
 
         return token
-    }
+    } */
 
 
     registAddress = async(req:Request):Promise<void>=>{

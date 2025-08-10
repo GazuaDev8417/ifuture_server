@@ -3,13 +3,13 @@ import ConnectToDatabase from "./Connexion"
 
 
 export default class DatabaseManager extends ConnectToDatabase{
-    static USER_TABLE = 'users'
+    //static USER_TABLE = 'users'
     static RESTAURANT_TABLE = 'restaurants'
     static PRODUCT_TABLE = 'products'
     static ORDER_TABLE = 'orders'
 
 
-    public static async createUsersTable():Promise<void>{
+   /*  public static async createUsersTable():Promise<void>{
         try{
             const exists = await this.con.schema.hasTable(this.USER_TABLE)
             if(!exists){
@@ -35,7 +35,7 @@ export default class DatabaseManager extends ConnectToDatabase{
         }catch(e){
             console.log(`Erro ao criar tabela ${this.USER_TABLE}: ${e}`)
         }
-    }
+    } */
 
 
     public static async createRestaurantsTable():Promise<void>{
@@ -52,6 +52,8 @@ export default class DatabaseManager extends ConnectToDatabase{
                     table.string('logourl', 255).notNullable()
                     table.string('name', 30).notNullable()
                     table.string('shipping', 20).notNullable()
+                    table.string('cnpj', 14).notNullable()
+                    table.string('password', 255).notNullable()
                 })
 
                 console.log(`Tabela ${this.RESTAURANT_TABLE} criada com sucesso`)
@@ -125,7 +127,7 @@ export default class DatabaseManager extends ConnectToDatabase{
 
 
 (async()=>{
-    await DatabaseManager.createUsersTable()
+    //await DatabaseManager.createUsersTable()
     await DatabaseManager.createRestaurantsTable()
     await DatabaseManager.createProductsTable()
     await DatabaseManager.createOrdersTable()

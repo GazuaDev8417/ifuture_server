@@ -213,5 +213,17 @@ export default class OrderData extends ConnectToDatabase{
             throw new Error(`Erro ao limpar histórico: ${e}`)
         }
     }
+
+    registAddressOrder = async(address:string, client:string):Promise<void>=>{
+        try{
+
+            await ConnectToDatabase.con(this.ORDER_TABLE)
+                .update({ address })
+                .where({ client })
+
+        }catch(e:any){
+            throw new Error(`Erro ao registrar endereço: ${e}`)
+        }
+    }
    
 }

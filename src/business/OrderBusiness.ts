@@ -103,7 +103,6 @@ export default class OrderBusiness{
 
 
     updateOrder = async(req:Request):Promise<void>=>{
-        await new Services().authToken(req)
         const { quantity } = req.body
 
         if(!quantity){

@@ -141,7 +141,8 @@ export default class OrderBusiness{
     }
 
     registAddressOrder = async(req:Request):Promise<void>=>{
-        const { address } = req.body
+        const { street, cep, number, neighbourhood, city, state, complement, person } = req.body
+        const address = `${street} ${number}, ${cep}, ${neighbourhood} - ${city}/${state} - ${complement}, ${person}`
         const token = req.headers.authorization
         const userId = new Services().tokenData(token as string).payload
 

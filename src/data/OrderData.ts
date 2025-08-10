@@ -63,8 +63,7 @@ export default class OrderData extends ConnectToDatabase{
         try{
             
             const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                restaurant,
-                state: 'REQUESTED'
+                restaurant
             })
             
             return orders
@@ -165,6 +164,32 @@ export default class OrderData extends ConnectToDatabase{
 
         }catch(e:any){
             throw new Error(`Erro ao finalizar pedidos: ${e}`)
+        }
+    }
+
+    endOrder = async(id:string, paymentMethod:string):Promise<void>=>{
+        try{
+
+            await ConnectToDatabase.con(this.ORDER_TABLE).update({
+                state: 'FINISHED',
+                paymentmethod: paymentMethod
+            }).where({ id })
+
+        }catch(e:any){
+            throw new Error(`Erro ao marcar pedido: ${e}`)
+        }
+    }
+
+    changeOrder = async(id:string):Promise<void>=>{
+        try{
+
+            await ConnectToDatabase.con(this.ORDER_TABLE).update({
+                state: 'REQUESTED',
+                paymentmethod: null
+            }).where({ id })
+
+        }catch(e:any){
+            throw new Error(`Erro ao marcar pedido: ${e}`)
         }
     }
 

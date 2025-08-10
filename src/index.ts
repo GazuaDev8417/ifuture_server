@@ -47,7 +47,7 @@ app.get('/restaurant_menu', restaurantController.restaurantMenu)
 app.get('/restaurant_orders', orderController.ordersByRestaurant)
 app.get('/active_restaurant_orders', orderController.activeRestaurantOrders)
 app.get('/users_orders/:id', orderController.restaurantOrdersByClient)
-//app.get('/user/:id', userController.userById)
+//  app.get('/user/:id', userController.userById)
 
 app.delete('/product/:id', restaurantController.deleteProduct)
 //ORDERS
@@ -60,6 +60,8 @@ app.get('/active_orders', orderController.activeOrders)
 
 app.patch('/order/:id', orderController.updateOrder)
 app.patch('/finished_orders', orderController.endOrders)
+app.patch('/finished_order/:id', orderController.endOrder)
+app.patch('/change_order/:id', orderController.changeOrder)
 app.patch('/address', orderController.registAddressOrder)
 
 app.delete('/order/:id', orderController.deleteOrder)

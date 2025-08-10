@@ -137,7 +137,33 @@ export default class OrderController{
             
             await this.orderBusiness.endOrders(req)
             
-            res.status(200).send('Pedido finalizado. Você pode acessar o histórico de seus pedidos clicando no ícone do pérfil na margem superior direita')
+            res.status(200).end()
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+    endOrder = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            await this.orderBusiness.endOrder(req)
+            
+            res.status(200).end()
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+    changeOrder = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            await this.orderBusiness.changeOrder(req)
+            
+            res.status(200).end()
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

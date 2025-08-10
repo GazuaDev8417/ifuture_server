@@ -124,6 +124,19 @@ export default class OrderBusiness{
         await this.orderData.endDorders(user.id, paymentMethod)
     }
 
+    endOrder = async(req:Request):Promise<void>=>{
+        /* await new Services().authToken(req) */
+        
+        const { paymentmethod } = req.body
+
+        await this.orderData.endOrder(req.params.id, paymentmethod)
+    }
+
+    changeOrder = async(req:Request):Promise<void>=>{
+
+        await this.orderData.changeOrder(req.params.id)
+    }
+
     
     activeOrders = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)

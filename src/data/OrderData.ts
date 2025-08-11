@@ -37,9 +37,8 @@ export default class OrderData extends ConnectToDatabase{
         try{
             
             const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                client,
-                state: 'REQUESTED'
-            })
+                client
+            }).orderBy('product', 'asc')
             
             return orders
         }catch(e:any){

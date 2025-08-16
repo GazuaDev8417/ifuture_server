@@ -94,7 +94,6 @@ export default class OrderController{
     cleanRequestedOrders = async(req:Request, res:Response):Promise<void>=>{
         try{
             await this.orderBusiness.cleanRequestedOrders(req)
-            console.log(req)
             
             res.status(200).end()
         }catch(e:any){

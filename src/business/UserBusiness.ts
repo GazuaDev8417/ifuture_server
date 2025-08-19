@@ -11,7 +11,7 @@ export default class UserBusiness{
         private userData:UserData
     ){}
 //USER FIELD
-   /*  signup = async(req:Request):Promise<string>=>{
+    signup = async(req:Request):Promise<string>=>{
         const { name, email, phone, password } = req.body
         const regexEmail = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
         const regexPhone = /^(\d{2})9\d{8}$/;
@@ -64,7 +64,7 @@ export default class UserBusiness{
 
         return token
 
-    } */
+    }
 
 
     /* getProfile = async(req:Request):Promise<UserModel>=>{
@@ -131,17 +131,17 @@ export default class UserBusiness{
         const { street, cep, number, neighbourhood, city, state, complement } = req.body
         const regex = /^\d{5}-\d{3}$/;
         
-        let finalStreet = street
+        /* let finalStreet = street
         let finalNeighbourhood = neighbourhood
         let finalCity = city
-        let finalState = state
+        let finalState = state */
 
         if(!regex.test(cep)){
             throw{
                 statusCode: 403,
                 error: new Error('Cep inválido!')
             }
-        }else{
+        }/* else{
             const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
             const data:cepModel = await res.json()
 
@@ -149,10 +149,10 @@ export default class UserBusiness{
             finalNeighbourhood = !neighbourhood ? data.bairro : neighbourhood
             finalCity = !city ? data.localidade : city
             finalState = !state ? data.estado : state
-        }
+        } */
         
         await this.userData.registAddress(
-            finalStreet, cep, number, finalNeighbourhood, finalCity, finalState, complement, user.id
+            street, cep, number, neighbourhood, city, state, complement, user.id
         )
     }
 

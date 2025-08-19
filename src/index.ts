@@ -24,7 +24,7 @@ const orderController = new OrderController(
 )
 
 
-//app.post('/signup', userController.signup)
+app.post('/signup', userController.signup)
 app.post('/login', userController.login)
 
 //app.get('/profile', userController.getProfile)
@@ -32,6 +32,7 @@ app.get('/address', userController.checkAddress)
 app.get('/address/:id', userController.addressByUser)
 
 app.patch('/user', userController.updateUser)
+app.patch('/user-address', userController.registAddress)
 
 app.delete('/user', userController.deleteUser)
 //RESTAURANT FIELD

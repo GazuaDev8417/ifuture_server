@@ -10,7 +10,7 @@ export default class UserController{
         private userBusiness:UserBusiness
     ){}
 
-    /* signup = async(req:Request, res:Response):Promise<void>=>{
+    signup = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const token = await this.userBusiness.signup(req)
@@ -21,7 +21,7 @@ export default class UserController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    } */
+    }
 
 
     /* getProfile = async(req:Request, res:Response):Promise<void>=>{

@@ -8,7 +8,7 @@ export default class UserData extends ConnectToDatabase{
     protected USER_TABLE = 'users'
     protected ORDER_TABLE = 'orders'
 //USER FIELD 
-    /* create = async(user:User):Promise<void>=>{
+    create = async(user:User):Promise<void>=>{
         try{
 
             await user.save()
@@ -16,7 +16,7 @@ export default class UserData extends ConnectToDatabase{
         }catch(e:any){
             throw new Error(`Erro ao criar usuário: ${e}`)
         }
-    } */
+    }
 
 
     getAllUsers = async():Promise<UserModel[]>=>{
@@ -57,7 +57,7 @@ export default class UserData extends ConnectToDatabase{
     } */
 
     
-    /* findByEmail = async(email:string):Promise<UserModel>=>{
+    findByEmail = async(email:string):Promise<UserModel>=>{
         try{
 
             const [user] = await ConnectToDatabase.con(this.USER_TABLE)
@@ -68,7 +68,7 @@ export default class UserData extends ConnectToDatabase{
         }catch(e:any){
             throw new Error(`Erro ao buscar usuário: ${e}`)
         }
-    } */
+    }
     
     
     registAddress = async(

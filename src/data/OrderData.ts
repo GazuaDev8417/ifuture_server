@@ -216,12 +216,12 @@ export default class OrderData extends ConnectToDatabase{
     }
 
     
-    cleanRequestedOrders = async(client:string):Promise<void>=>{
+    cleanRequestedOrders = async(client:string, provider:string):Promise<void>=>{
         try{
 
 
             const orders:OrderModel[] = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                client, state: 'REQUESTED'
+                client
             })
 
             if(orders.length === 0){
@@ -230,7 +230,7 @@ export default class OrderData extends ConnectToDatabase{
 
             await ConnectToDatabase.con(this.ORDER_TABLE).delete().where({
                 client,
-                state: 'REQUESTED'
+                restaurant: provider
             })
 
         }catch(e:any){

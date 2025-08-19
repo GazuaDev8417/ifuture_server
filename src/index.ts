@@ -66,4 +66,4 @@ app.patch('/address', orderController.registAddressOrder)
 
 app.delete('/order/:id', orderController.deleteOrder)
 app.delete('/orders', orderController.cleanOrdersHistory)
-app.delete('/requested_orders', orderController.cleanRequestedOrders)
+app.delete('/requested_orders/:id', orderController.cleanRequestedOrders)

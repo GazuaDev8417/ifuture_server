@@ -24,8 +24,7 @@ export default class RestaurantData extends ConnectToDatabase{
         try{
 
             const restaurants = await ConnectToDatabase.con(this.RESTAURANT_TABLE).select(
-                'address', 'category', 'deliverytime', 'description', 'id', 'logourl',
-                'name', 'shipping', 'cnpj'
+                'address', 'category', 'description', 'id', 'name', 'cnpj', 'logourl'
             )
 
             return restaurants
@@ -39,7 +38,7 @@ export default class RestaurantData extends ConnectToDatabase{
         try{
 
             const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE)
-            .select('address', 'category', 'deliverytime', 'description', 'id', 'logourl', 'name', 'shipping', 'cnpj')
+            .select('address', 'category', 'description', 'id', 'name', 'cnpj', 'logourl')
             .where({ id })
 
             return restaurant

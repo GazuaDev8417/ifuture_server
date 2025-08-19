@@ -24,7 +24,7 @@ export default class OrderController{
     ordersByClient = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            const orders = await this.orderBusiness.ordersByClient(req)           
+            const orders = await this.orderBusiness.ordersByClient(req)        
 
             res.status(200).send(orders)
         }catch(e:any){

@@ -100,7 +100,7 @@ export default class OrderBusiness{
         const token = req.headers.authorization
         const userId = new Services().tokenData(token as string).payload
         
-        await this.orderData.cleanRequestedOrders(userId)
+        await this.orderData.cleanRequestedOrders(userId, req.params.id)
     }
 
 

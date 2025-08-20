@@ -112,7 +112,7 @@ export default class UserData extends ConnectToDatabase{
     }
 
 
-    checkAddress = async(id:string):Promise<User>=>{
+    addressByUser = async(id:string):Promise<User>=>{
         try{
 
             const [address] = await ConnectToDatabase.con(this.USER_TABLE).select(

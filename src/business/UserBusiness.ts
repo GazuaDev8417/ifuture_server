@@ -76,16 +76,7 @@ export default class UserBusiness{
     }
 
 
-    /* userById = async(req:Request):Promise<UserModel>=>{
-        await new Services().authToken_restaurant(req)
-        
-        const user = await this.userData.getProfile(req.params.id)
-
-        return user
-    } */
-
-
-    /* login = async(req:Request):Promise<string>=>{
+    login = async(req:Request):Promise<string>=>{
         const { email, password } = req.body
         const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
 
@@ -123,7 +114,7 @@ export default class UserBusiness{
         const token = new Services().token(registeredUser.id)
 
         return token
-    } */
+    }
 
 
     registAddress = async(req:Request):Promise<void>=>{
@@ -180,25 +171,17 @@ export default class UserBusiness{
     }
 
 
-    checkAddress = async(req:Request):Promise<User>=>{
+    addressByUser = async(req:Request):Promise<User>=>{
         const user = await new Services().authToken(req)
+        const address = await this.userData.addressByUser(user.id)
+        const checkdAddress = Object.values(address).some(value => value !== null)
 
-        const address = await this.userData.checkAddress(user.id)
-        const checedAddress = Object.values(address).some(value => value !== null)
-
-        if(!checedAddress){
+        if(!checkdAddress){
             throw{
                 statusCode: 404,
                 error: new Error('Usuário sem endereço cadastrado')
             }
         }
-        
-        return address
-    }
-
-    addressByUser = async(userId:string):Promise<User>=>{
-
-        const address = await this.userData.checkAddress(userId)
         
         return address
     }

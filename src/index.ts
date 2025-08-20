@@ -30,8 +30,7 @@ app.post('/signup', userController.signup)
 app.post('/login', userController.login)
 
 app.get('/profile', userController.getProfile)
-app.get('/address', userController.checkAddress)
-app.get('/address/:id', userController.addressByUser)
+app.get('/address/', userController.addressByUser)
 
 app.patch('/user', userController.updateUser)
 app.patch('/user-address', userController.registAddress)
@@ -50,7 +49,6 @@ app.get('/restaurant_menu', restaurantController.restaurantMenu)
 app.get('/restaurant_orders', orderController.ordersByRestaurant)
 app.get('/active_restaurant_orders', orderController.activeRestaurantOrders)
 app.get('/users_orders/:id', orderController.restaurantOrdersByClient)
-//  app.get('/user/:id', userController.userById)
 
 app.delete('/product/:id', restaurantController.deleteProduct)
 //ORDERS

@@ -68,9 +68,8 @@ export default class UserController{
 
     login = async(req:Request, res:Response):Promise<void>=>{
         try{
-
-            const userId = crypto.randomUUID()
-            const token = new Services().token(userId)
+            
+            const token = await this.userBusiness.login(req)
 
             res.status(200).send(token)
         }catch(e:any){
@@ -107,25 +106,12 @@ export default class UserController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     }
-
-
-    checkAddress = async(req:Request, res:Response):Promise<void>=>{
-        try{
-            
-            const address:User = await this.userBusiness.checkAddress(req)
-
-            res.status(200).send(address)
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    }
+    
 
     addressByUser = async(req:Request, res:Response):Promise<void>=>{
         try{
             
-            const address:User = await this.userBusiness.addressByUser(req.params.id)
+            const address:User = await this.userBusiness.addressByUser(req)
 
             res.status(200).send(address)
         }catch(e:any){

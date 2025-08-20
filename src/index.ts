@@ -2,9 +2,11 @@ import { app } from "./app"
 import OrderBusiness from "./business/OrderBusiness"
 import OrderController from "./controller/OrderController"
 import OrderData from "./data/OrderData"
+
 import RestaurantController from "./controller/RestaurantController"
 import RestaurantBusiness from "./business/RestaurantBusiness"
 import RestaurantData from "./data/RestaurantData"
+
 import UserController from "./controller/UserController"
 import UserBusiness from "./business/UserBusiness"
 import UserData from "./data/UserData"
@@ -54,15 +56,15 @@ app.delete('/product/:id', restaurantController.deleteProduct)
 //ORDERS
 app.post('/order', orderController.todo_orders)
 
-app.get('/orders', orderController.ordersByClient)
+//app.get('/orders', orderController.ordersByClient)
 app.get('/order/:id', orderController.orderById)
-app.get('/order/:id', orderController.updateOrder)
 app.get('/active_orders', orderController.activeOrders)
+app.get('/finished_orders', orderController.finishedOrders)
 
 app.patch('/order/:id', orderController.updateOrder)
-app.patch('/finished_orders', orderController.endOrders)
-app.patch('/finished_order/:id', orderController.endOrder)
-app.patch('/change_order/:id', orderController.changeOrder)
+app.patch('/finish_orders/:id', orderController.endOrders)
+app.patch('/finish_order/:id', orderController.endOrder)
+//app.patch('/change_order/:id', orderController.changeOrder)
 app.patch('/address', orderController.registAddressOrder)
 
 app.delete('/order/:id', orderController.deleteOrder)

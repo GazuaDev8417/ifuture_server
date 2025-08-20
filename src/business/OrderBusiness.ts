@@ -14,9 +14,8 @@ export default class OrderBusiness{
     ){}
 
     todo_orders = async(req:Request):Promise<void>=>{
-        const token = req.headers.authorization
-        const userId = new Services().tokenData(token as string).payload
-        //const address = `${user.street} ${user.number}, ${user.neighbourhood} ${user.city} - ${user.state}`
+        const user = await new Services().authToken(req)
+        const address = `${user.street} ${user.number}, ${user.neighbourhood} ${user.city} - ${user.state}`
         const { product, price, quantity, momentString, restaurant, photoUrl, description } = req.body
         const localMoment = moment.utc(momentString).tz("America/Sao_Paulo").format('DD/MM/YYYY [às] HH:mm')
         const id = new Services().idGenerator()
@@ -25,14 +24,14 @@ export default class OrderBusiness{
             quantity * price,
             localMoment,            
             restaurant,
-            userId,
+            user.id,
             'REQUESTED',
-            //address,
+            address,
             description
         )
         
 
-        const registeredOrders = await this.orderData.findOrderByRequest(product, restaurant, userId)
+        const registeredOrders = await this.orderData.findOrderByRequest(product, restaurant, user.id)
         if(registeredOrders){
             throw{
                 statusCode: 403,
@@ -44,14 +43,14 @@ export default class OrderBusiness{
     }
 
 
-    ordersByClient = async(req:Request):Promise<OrderModel[]>=>{
+    /* ordersByClient = async(req:Request):Promise<OrderModel[]>=>{
          const token = req.headers.authorization
          const userId = new Services().tokenData(token as string).payload
 
          const orders = await this.orderData.ordersByClient(userId)
         
          return orders
-    }
+    } */
 
 
     orderById = async(req:Request):Promise<OrderModel>=>{
@@ -70,7 +69,7 @@ export default class OrderBusiness{
         return orders
    }
 
-   restaurantOrdersByClient = async(req:Request):Promise<OrderModel[]>=>{
+    restaurantOrdersByClient = async(req:Request):Promise<OrderModel[]>=>{
         const restaurant = await new Services().authToken_restaurant(req)
         
         const orders = await this.orderData.restaurantOrdersByClient(restaurant.id, req.params.id)
@@ -79,14 +78,10 @@ export default class OrderBusiness{
     }
 
 
-    deleteOrder = async(req:Request):Promise<OrderModel[]>=>{
-        const token = req.headers.authorization
-        const userId = new Services().tokenData(token as string).payload
+    deleteOrder = async(req:Request):Promise<void>=>{
+        await new Services().authToken(req)
         
         await this.orderData.deleteOrder(req.params.id)
-        const orders = await this.orderData.ordersByClient(userId)
-
-        return orders
     }
 
 
@@ -122,26 +117,33 @@ export default class OrderBusiness{
         const user = await new Services().authToken(req)
         const { paymentMethod } = req.body
         
-        await this.orderData.endDorders(user.id, paymentMethod)
+        await this.orderData.endDorders(user.id, paymentMethod, req.params.id)
     }
 
     endOrder = async(req:Request):Promise<void>=>{
-        /* await new Services().authToken(req) */
+        await new Services().authToken(req)
         
         const { paymentmethod } = req.body
 
         await this.orderData.endOrder(req.params.id, paymentmethod)
     }
 
-    changeOrder = async(req:Request):Promise<void>=>{
+    /* changeOrder = async(req:Request):Promise<void>=>{
 
         await this.orderData.changeOrder(req.params.id)
-    }
+    } */
 
     
     activeOrders = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)
         const orders = await this.orderData.activeOrders(user.id)
+
+        return orders
+    }
+
+    finishedOrders = async(req:Request):Promise<OrderModel[]>=>{
+        const user = await new Services().authToken(req)
+        const orders = await this.orderData.finishedOrders(user.id)
 
         return orders
     }

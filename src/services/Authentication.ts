@@ -53,7 +53,6 @@ export default class Services{
 
     authToken = async(req:Request):Promise<UserModel>=>{
         const token = req.headers.authorization
-        
         const tokenData =  new Services().tokenData(token as string)
         const user = await new UserData().findById(tokenData.payload)
         

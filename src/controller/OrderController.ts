@@ -21,7 +21,7 @@ export default class OrderController{
     }
 
 
-    ordersByClient = async(req:Request, res:Response):Promise<void>=>{
+    /* ordersByClient = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const orders = await this.orderBusiness.ordersByClient(req)        
@@ -32,7 +32,7 @@ export default class OrderController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
     orderById = async(req:Request, res:Response):Promise<void>=>{
@@ -74,7 +74,6 @@ export default class OrderController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     }
-
 
 
     deleteOrder = async(req:Request, res:Response):Promise<void>=>{
@@ -157,7 +156,7 @@ export default class OrderController{
         }
     }
 
-    changeOrder = async(req:Request, res:Response):Promise<void>=>{
+    /* changeOrder = async(req:Request, res:Response):Promise<void>=>{
         try{
             
             await this.orderBusiness.changeOrder(req)
@@ -168,13 +167,27 @@ export default class OrderController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
     activeOrders = async(req:Request, res:Response):Promise<void>=>{
         try{
             
             const orders = await this.orderBusiness.activeOrders(req)
+            
+            res.status(200).send(orders)
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
+    finishedOrders = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            const orders = await this.orderBusiness.finishedOrders(req)
             
             res.status(200).send(orders)
         }catch(e:any){
@@ -197,6 +210,7 @@ export default class OrderController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     }
+
 
     registAddressOrder = async(req:Request, res:Response):Promise<void>=>{
         try{

@@ -2,7 +2,7 @@ import { Request } from "express"
 import UserData from "../data/UserData"
 import Services from "../services/Authentication"
 import User from "../model/User"
-import { cepModel } from "../model/typesAndInterfaces"
+import { cepModel, UserModel } from "../model/typesAndInterfaces"
 
 
 
@@ -67,13 +67,13 @@ export default class UserBusiness{
     }
 
 
-    /* getProfile = async(req:Request):Promise<UserModel>=>{
+    getProfile = async(req:Request):Promise<UserModel>=>{
         const user = await new Services().authToken(req)
         
         const profile = await this.userData.getProfile(user.id)
 
         return profile
-    } */
+    }
 
 
     /* userById = async(req:Request):Promise<UserModel>=>{

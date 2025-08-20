@@ -24,7 +24,7 @@ export default class UserController{
     }
 
 
-    /* getProfile = async(req:Request, res:Response):Promise<void>=>{
+    getProfile = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const user = await this.userBusiness.getProfile(req)
@@ -35,7 +35,7 @@ export default class UserController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    } */
+    }
 
 
     /* userById = async(req:Request, res:Response):Promise<void>=>{

@@ -43,7 +43,7 @@ export default class UserData extends ConnectToDatabase{
     }
 
 
-    /* getProfile = async(id:string):Promise<UserModel>=>{
+    getProfile = async(id:string):Promise<UserModel>=>{
         try{
 
             const [user] = await ConnectToDatabase.con(this.USER_TABLE)
@@ -54,7 +54,7 @@ export default class UserData extends ConnectToDatabase{
         }catch(e:any){
             throw new Error(`Erro ao buscar usuário: ${e}`)
         }
-    } */
+    }
 
     
     findByEmail = async(email:string):Promise<UserModel>=>{
